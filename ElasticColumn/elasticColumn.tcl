@@ -53,6 +53,6 @@ pattern Plain 2 Linear {
     load 2 0.5 0.0 0.0
     load 3 1.0 0.0 0.0
 }
-integrator DisplacementControl 3 1 0.001
-analyze 500
+integrator DisplacementControl 3 1 0.00001
+analyze 50000
 puts " end pushover "
