@@ -1,6 +1,6 @@
 # 对 OpenSees 使用记录
 
-## 简单的算例设计方法
+## [简单的算例设计方法](https://github.com/Mengsen-W/OpenSeesFiles/tree/master/Example-test "Example test")
 
 1. 默认的质量实际上不是进行重力分析，而是进行动力分析所有，重力分析要以加载力的方式进行。
 
@@ -8,7 +8,7 @@
 
 3. 若一次分析后不需要场面的持序作用，即使用 wipeAnalysis 命令。
 
-## 二维弹性柱的静、动力分析
+## [二维弹性柱的静、动力分析](https://github.com/Mengsen-W/OpenSeesFiles/tree/master/ElasticColumn "Elastic Column")
 
 1. 增加迭代步数减小步长会提高精确度，但可能会导致不收敛，误差约在 5% 左右
 
@@ -16,7 +16,7 @@
 
 3. 地震波文件没办法取得，生成的地震反应可能也是错的。
 
-## 三维剪力墙的滞回曲线分析
+## [三维剪力墙的滞回曲线分析](https://github.com/Mengsen-W/OpenSeesFiles/tree/master/ShearWall "Shear Wall")
 
 1. 对于剪力墙，壳单元更能充分反应其剪压复合的特点。
 
@@ -26,7 +26,7 @@
 
 4. OpenSees 不需要特殊指出约束，因为他们依靠节点传递应力应变
 
-## 三维剪力墙 timeSeries 方法
+## [三维剪力墙 timeSeries 方法](https://github.com/Mengsen-W/OpenSeesFiles/tree/master/TimeSeriesShearWall "Time Series Shear Wall")
 
 1. 对于箍筋层，小范围变化影响不大
 
@@ -40,4 +40,3 @@
     3. Penalty 罚函数法，依赖于罚函数的选取，对于一些复杂得多的问题，罚函数往往能在速度与精确性之间的到满足。而对于一般问题，罚函数显得速度有些慢。
 
     4. Transformation 变换约束，利用一个试探性的位移对于约束的单点；对于单点多约束问题可能无法满足，因为变换约束只能满足一个约束，甚至一个都不满足。
-    
