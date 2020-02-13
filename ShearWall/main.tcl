@@ -38,9 +38,10 @@ load 602 1E3 0 0 0 0 0
 
 # 若 Dnum 设为1，则 Ddelta 为每一圈的最大位移
 # 若 Dnum 不唯一，则 Ddelta 为每圈的增量
-set DT {4 7 12 18 22 27 32 36 42 47 51 57 }
+set DT {4 7 12 18 22 27 32 36 42 47 51 57 60 66 70 76 80 86 90 96 100 106 110 116 120 126 130}
 foreach dt $DT {
     Cyclic_Function $dt 1 1 602 1 1E-2 1000
 }
 
+puts "All of End"
 wipe
