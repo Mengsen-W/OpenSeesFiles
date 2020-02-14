@@ -40,3 +40,14 @@
     3. Penalty 罚函数法，依赖于罚函数的选取，对于一些复杂得多的问题，罚函数往往能在速度与精确性之间的到满足。而对于一般问题，罚函数显得速度有些慢。
 
     4. Transformation 变换约束，利用一个试探性的位移对于约束的单点；对于单点多约束问题可能无法满足，因为变换约束只能满足一个约束，甚至一个都不满足。
+
+## FRP剪力墙
+
+1. uniaxialMaterial Hysteretic 用来模拟复合筋的情况
+    1. 如果第三个点比第二个点大，那么之后的斜率会按前两个点的斜率上升
+    2. 如果第三个点比第二个点小，那么之后会以第三个点后的应力是一条恒定的直线
+    3. pinchx, pinchy, damage1, damage2 beta 如何计算目前仍不明确；但是可以在[这](https://opensees.berkeley.edu/OpenSees/manuals/usermanual/4052.htm)看到更改的会产什么样的变换。
+        1. pinchx pinchy 的减小会使图像项远点捏缩
+        2. pinchx减小会使图像平行于y轴
+        3. damage1 上升会使图像在大应力下分别捏缩到x y 轴
+        4. damage2和beta的改变没有看到明显的影响

@@ -20,30 +20,31 @@ puts "Material"
 source Material.tcl
 puts "End of Material"
 
-puts "Elements"
+puts "Element"
 source Elements.tcl
-puts "End of Elements"
+puts "End of Element"
+
+fixZ 0. 1 1 1 1 1 1
 
 puts "Gravity"
-Gravity_Proc 10
+source Gravity.tcl
+Gravity_Proc 1000
 puts "End of Gravity"
 
 puts "Output"
-recorder Node -file F-Disp.txt -time -node 602 -dof 1 disp
+recorder Node -file F-Disp.txt -time -node 2607 -dof 1 disp
 puts "End of Output"
 
 puts "Pushover"
 pattern Plain 2 Linear {
-load 602 1E3 0 0 0 0 0
+load 2607 1 0 0 0 0 0
 }
-
+puts "End of Pushover"
 
 # 若 Dnum 设为1，则 Ddelta 为每一圈的最大位移
 # 若 Dnum 不唯一，则 Ddelta 为每圈的增量
-set DT {4 7 12 18 22 27 32 36 42 47 51 57 60 66 70 76 80 86 90 96 100 106 110 116 120 126 130}
-foreach dt $DT {
-    Cyclic_Function $dt 1 1 602 1 1E-2 1000
-}
-
+Cyclic_Function 2 35 0.1 2607 1 1E-2 1000
+#　ModelInfo_Proc model.txt
 puts "All of End"
+
 wipe

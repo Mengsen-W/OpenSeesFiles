@@ -89,7 +89,7 @@ proc Gravity_Proc { step } {
     constraints Transformation
     numberer RCM
     system UmfPack
-    test EnergyIncr 1.0e-6 200
+    test NormDispIncr 1.0e-6 200 0
     integrator LoadControl $incr
     algorithm Newton
     analysis Static
