@@ -5,19 +5,19 @@
 # * @Last Modified time: 2020-02-14 14:10:31
 
 # C40 concrete
-nDMaterial PlaneStressUserMaterial 1 40 7 30.8E6 3.08E6 -6.16E6 -0.002 -0.005 0.001 0.05
-nDMaterial PlateFromPlaneStress 2 1 1.83E10
+nDMaterial PlaneStressUserMaterial 1 40 7 30.8 3.08 -6.16 -0.002 -0.005 0.001 0.05
+nDMaterial PlateFromPlaneStress 2 1 1.83E4
 
 # middleSFCB
-uniaxialMaterial Hysteretic 3 245.6E6 0.1557E-2 641.2E6 1.345E-2 232.6E6 1.382E-2 -245.6E6 -0.1557E-2 -641.2E6 -1.345E-2 -232.6E6 -1.382E-2 0.8 0.2 0 0
+uniaxialMaterial Hysteretic 3 282.6 0.1726E-2 673.5 1.343E-2 258.9 1.359E-2 -282.6 -0.1726E-2 -674.5 -1.343E-2 -258.9 -1.359E-2 0.8 0.2 0 0
 
 
 # mainSFCB
-uniaxialMaterial Hysteretic 4 365.5E6 0.2709E-2 578.6E6 1.164E-2 334.1E6 1.679E-2 -365.5E6 -0.2709E-2 -578.6E6 -1.164E-2 -334.1E6 -1.679E-2 0.8 0.2 0 0
+uniaxialMaterial Hysteretic 4 372.5 0.3000E-2 584.1 1.622E-2 369.2 1.785E-2 -372.5 -0.3000E-2 -584.1 -1.622E-2 -369.1 -1.785E-2 0.8 0.2 0 0
 
 
 # FRP
-uniaxialMaterial Elastic 5 52000
+uniaxialMaterial Hysteretic 5 953 0.01 50 0.016 -953 -0.01 -50 -0.016 0.8 0.2 0 0
 
 # FRP 箍筋层
 nDMaterial PlateRebar 6 5 0
@@ -28,14 +28,14 @@ nDMaterial PlateRebar 6 5 0
 ##cover                 25                              2
 ##FRP               0.3856               0              6
 ##FRP               0.3343               0              6
-##core              37.140                              2
-##core              37.140                              2
-##core              37.140                              2
-##core              37.140                              2
+##core              37.141                              2
+##core              37.141                              2
+##core              37.141                              2
+##core              37.141                              2
 ##FRP               0.3343               0              6
 ##FRP               0.3856               0              6
 ##cover                 25                              2
-section LayeredShell 1 10 2 25 6 0.3856 6 0.3856 2 37.140 2 37.140 2 37.140 2 37.140 6 0.3343 6 0.3856 2 25
+section LayeredShell 1 10 2 25 6 0.3856 6 0.3343 2 37.141 2 37.141 2 37.141 2 37.141 6 0.3343 6 0.3856 2 25
 
 # 中心区分层壳
 #middle region

@@ -28,7 +28,7 @@ fixZ 0. 1 1 1 1 1 1
 
 puts "Gravity"
 source Gravity.tcl
-Gravity_Proc 1000
+Gravity_Proc 10
 puts "End of Gravity"
 
 puts "Output"
@@ -37,14 +37,14 @@ puts "End of Output"
 
 puts "Pushover"
 pattern Plain 2 Linear {
-load 2607 1 0 0 0 0 0
+load 2607 1E3 0 0 0 0 0
 }
 puts "End of Pushover"
 
 # 若 Dnum 设为1，则 Ddelta 为每一圈的最大位移
 # 若 Dnum 不唯一，则 Ddelta 为每圈的增量
-Cyclic_Function 2 35 0.1 2607 1 1E-2 1000
-#　ModelInfo_Proc model.txt
+Cyclic_Function 2 35 0.05 2607 1 1E-2 1000
+ModelInfo_Proc model.txt
 puts "All of End"
 
 wipe

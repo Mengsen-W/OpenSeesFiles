@@ -31,6 +31,7 @@ proc Cyclic_Function { Ddelta Dnum Dincr Node dof tol iter } {
     analysis Static
     for {set ii 1} {$ii <=$Dnum} {incr ii} {
         set u [expr $Ddelta*$ii]
+	puts "$ii Cyclic of Displacement"
         set negdel [expr $Dincr * -1]
         integrator DisplacementControl $Node $dof $Dincr
         Analysis_Proc [expr int($u/$Dincr)]
@@ -50,19 +51,46 @@ proc Cyclic_Function { Ddelta Dnum Dincr Node dof tol iter } {
 proc Analysis_Proc { Num } {
 	for {set step 1} {$step <=$Num} {incr step} {
 		#初始为Newton法（切线）
+		algorithm Newton
+        set ok [analyze 1]
+
+        if {$ok != 0} {
+        puts "Trying SecantNewton .."
+		algorithm SecantNewton
+		set ok [analyze 1]
+        }
+
+        if {$ok != 0} {
+        puts "Trying ModifiedNewton .."
+		algorithm ModifiedNewton
+		set ok [analyze 1]
+        }
+
+        if {$ok != 0} {
+        puts "Trying KrylovNewton .."
 		algorithm KrylovNewton
 		set ok [analyze 1]
-		#收敛失败，尝试使用Broyden
-		#if {$ok != 0} {
-			#puts "Trying Broyden .."
-			#algorithm Broyden 500
-			#set ok [analyze 1]
-			#algorithm Newton
-		#}
+        }
+
 		#收敛失败，尝试使用NewtonWithLineSearch
 		if {$ok != 0} {
 			puts "Trying NewtonWithLineSearch .."
 			algorithm NewtonLineSearch 0.8
+			set ok [analyze 1]
+		}
+
+		# 收敛失败，尝试使用Broyden
+		if {$ok != 0} {
+			puts "Trying Broyden .."
+			algorithm Broyden 500
+			set ok [analyze 1]
+			algorithm Newton
+		}
+
+		# 收敛失败，尝试使用Broyden
+		if {$ok != 0} {
+			puts "Trying BFGS .."
+			algorithm BFGS
 			set ok [analyze 1]
 			algorithm Newton
 		}
