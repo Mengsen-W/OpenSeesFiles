@@ -31,13 +31,18 @@ proc Cyclic_Function { Ddelta Dnum Dincr Node dof tol iter } {
     analysis Static
     for {set ii 1} {$ii <=$Dnum} {incr ii} {
         set u [expr $Ddelta*$ii]
-	puts "$ii Cyclic of Displacement"
         set negdel [expr $Dincr * -1]
         integrator DisplacementControl $Node $dof $Dincr
+	    puts "$ii Cyclic of Displacement"
+        puts "Plus of Displacement"
         Analysis_Proc [expr int($u/$Dincr)]
         integrator DisplacementControl $Node $dof $negdel
+	    puts "$ii Cyclic of Displacement"
+        puts "Minus of Displacement"
         Analysis_Proc [expr int(2*$u/$Dincr)]
         integrator DisplacementControl $Node $dof $Dincr
+	    puts "$ii Cyclic of Displacement"
+        puts "Back to Zero"
         Analysis_Proc [expr int($u/$Dincr)]
     }
 }
@@ -50,54 +55,54 @@ proc Cyclic_Function { Ddelta Dnum Dincr Node dof tol iter } {
 #if NOT successful return < 0
 proc Analysis_Proc { Num } {
 	for {set step 1} {$step <=$Num} {incr step} {
-		#初始为Newton法（切线）
-		algorithm Newton
-        set ok [analyze 1]
+        puts "$step of DisplacementControl Increment"
+        set ok 1
+        for { set i 1 } { $ok != 0 } { incr i } {
+            set res [expr ($i - 1) * 10 + 1]
+            puts "\nKrylovNewton.."
+    		algorithm KrylovNewton
+            set ok [analyze $res]
 
-		#收敛失败，尝试使用NewtonWithLineSearch
-		if {$ok != 0} {
-			puts "Trying NewtonWithLineSearch .."
-			algorithm NewtonLineSearch 0.8
-			set ok [analyze 1]
-		}
+    		if {$ok != 0} {
+    			puts "\nTrying NewtonWithLineSearch .."
+    			algorithm NewtonLineSearch
+    			set ok [analyze $res]
+    		}
 
-        if {$ok != 0} {
-        puts "Trying KrylovNewton .."
-		algorithm KrylovNewton
-		set ok [analyze 1]
+            if {$ok != 0} {
+            puts "\nTrying Newton .."
+    		algorithm Newton
+    		set ok [analyze $res]
+            }
+
+    		if {$ok != 0} {
+    			puts "\nTrying BFGS .."
+    			algorithm BFGS
+    			set ok [analyze $res]
+    		}
+
+            if {$ok != 0} {
+            puts "\nTrying SecantNewton .."
+    		algorithm SecantNewton
+    		set ok [analyze $res]
+            }
+
+            if {$ok != 0} {
+            puts "\nTrying ModifiedNewton .."
+    		algorithm ModifiedNewton
+    		set ok [analyze $res]
+            }
+
+		    if {$ok != 0} {
+    			puts "\nTrying Broyden .."
+    			algorithm Broyden 500
+    			set ok [analyze $res]
+    		}
+
+    		if {$ok != 0} {
+    			puts "\nConvergence Failure!\n"
+    		}
         }
-
-		# 收敛失败，尝试使用Broyden
-		if {$ok != 0} {
-			puts "Trying BFGS .."
-			algorithm BFGS
-			set ok [analyze 1]
-			algorithm Newton
-		}
-        
-        if {$ok != 0} {
-        puts "Trying SecantNewton .."
-		algorithm SecantNewton
-		set ok [analyze 1]
-        }
-
-        if {$ok != 0} {
-        puts "Trying ModifiedNewton .."
-		algorithm ModifiedNewton
-		set ok [analyze 1]
-        }
-
-		# 收敛失败，尝试使用Broyden
-		if {$ok != 0} {
-			puts "Trying Broyden .."
-			algorithm Broyden 500
-			set ok [analyze 1]
-			algorithm Newton
-		}
-
-		if {$ok != 0} {
-			puts "Convergence Failure!"
-		}
 	}
 }
 
@@ -123,6 +128,6 @@ proc Gravity_Proc { step } {
     algorithm Newton
     analysis Static
     analyze $step
-    puts "Gravity Done."
+    puts "\nGravity Done."
     loadConst -time 0.0
 }
