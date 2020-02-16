@@ -1,6 +1,8 @@
 {
     "cSpell.ignoreWords": [
+        "bfgs",
         "hysteretic",
+        "krylov",
         "pinchx",
         "pinchy"
     ]

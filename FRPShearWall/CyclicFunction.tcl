@@ -54,6 +54,27 @@ proc Analysis_Proc { Num } {
 		algorithm Newton
         set ok [analyze 1]
 
+		#收敛失败，尝试使用NewtonWithLineSearch
+		if {$ok != 0} {
+			puts "Trying NewtonWithLineSearch .."
+			algorithm NewtonLineSearch 0.8
+			set ok [analyze 1]
+		}
+
+        if {$ok != 0} {
+        puts "Trying KrylovNewton .."
+		algorithm KrylovNewton
+		set ok [analyze 1]
+        }
+
+		# 收敛失败，尝试使用Broyden
+		if {$ok != 0} {
+			puts "Trying BFGS .."
+			algorithm BFGS
+			set ok [analyze 1]
+			algorithm Newton
+		}
+        
         if {$ok != 0} {
         puts "Trying SecantNewton .."
 		algorithm SecantNewton
@@ -66,19 +87,6 @@ proc Analysis_Proc { Num } {
 		set ok [analyze 1]
         }
 
-        if {$ok != 0} {
-        puts "Trying KrylovNewton .."
-		algorithm KrylovNewton
-		set ok [analyze 1]
-        }
-
-		#收敛失败，尝试使用NewtonWithLineSearch
-		if {$ok != 0} {
-			puts "Trying NewtonWithLineSearch .."
-			algorithm NewtonLineSearch 0.8
-			set ok [analyze 1]
-		}
-
 		# 收敛失败，尝试使用Broyden
 		if {$ok != 0} {
 			puts "Trying Broyden .."
@@ -87,13 +95,6 @@ proc Analysis_Proc { Num } {
 			algorithm Newton
 		}
 
-		# 收敛失败，尝试使用Broyden
-		if {$ok != 0} {
-			puts "Trying BFGS .."
-			algorithm BFGS
-			set ok [analyze 1]
-			algorithm Newton
-		}
 		if {$ok != 0} {
 			puts "Convergence Failure!"
 		}
