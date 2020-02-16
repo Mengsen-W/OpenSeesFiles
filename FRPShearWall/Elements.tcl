@@ -40,22 +40,25 @@ for { set i 1} { $i < 26} { incr i } {
 }
 
 #mainSFCB
-for { set i 1} { $i < 26 } { incr i } {
-    set TrussID [expr 3 * 10000 + $i]
-    set nodei [expr $i *100 + 3]
-    set nodej [expr ($i + 1) * 100 + 3]
-    element truss $TrussID $nodei $nodej 628.318 4
+for { set j 3 } { $j <= 4 } { incr j} {
+    for { set i 1} { $i < 26 } { incr i } {
+        set TrussID [expr $j * 10000 + $i]
+        set nodei [expr $i *100 + $j]
+        set nodej [expr ($i + 1) * 100 + $j]
+        element truss $TrussID $nodei $nodej 628.318 4
+    }
 }
-
-for { set i 1} { $i < 26 } { incr i } {
-    set TrussID [expr 11 * 10000 + $i]
-    set nodei [expr $i *100 + 11]
-    set nodej [expr ($i + 1) * 100 + $j]
-    element truss $TrussID $nodei $nodej 628.318 4
+for { set j 10 } { $j <= 11 } { incr j } {
+    for { set i 1} { $i < 26 } { incr i } {
+        set TrussID [expr $j * 10000 + $i]
+        set nodei [expr $i *100 + $j]
+        set nodej [expr ($i + 1) * 100 + $j]
+        element truss $TrussID $nodei $nodej 628.318 4
+    }
 }
 
 #middleSFCB
-for { set j 4 } { $j <= 10 } { incr j } {
+for { set j 5 } { $j <= 9 } { incr j } {
     for { set i 1} { $i < 26 } { incr i } {
         set TrussID [expr $j * 10000 + $i]
         set nodei [expr $i *100 + $j]
