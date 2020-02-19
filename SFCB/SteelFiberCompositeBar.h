@@ -40,7 +40,7 @@
 class SteelFiberCompositeBar : public UniaxialMaterial {
  public:
   SteelFiberCompositeBar(int tag, double mom1, double rot1, double mom2,
-                         double rot2, doubel mom3, double rot 3, double pinchX,
+                         double rot2, doubel mom3, double rot3 , double pinchX,
                          double pinchY, double damfc1 = 0.0,
                          double damfc2 = 0.0, double beta = 0.0);
   SteelFiberCompositeBar(int tag, double mom1, double rot1, double mom2,
