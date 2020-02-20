@@ -59,48 +59,48 @@ proc Analysis_Proc { Num } {
         set ok 1
         for { set i 1 } { $ok != 0 } { incr i } {
             set res [expr ($i - 1) * 10 + 1]
-            puts "\nKrylovNewton.."
+            puts "KrylovNewton.."
     		algorithm KrylovNewton
             set ok [analyze $res]
 
     		if {$ok != 0} {
-    			puts "\nTrying NewtonWithLineSearch .."
+    			puts "Trying NewtonWithLineSearch .."
     			algorithm NewtonLineSearch
     			set ok [analyze $res]
     		}
 
             if {$ok != 0} {
-            puts "\nTrying Newton .."
+            puts "Trying Newton .."
     		algorithm Newton
     		set ok [analyze $res]
             }
 
     		if {$ok != 0} {
-    			puts "\nTrying BFGS .."
+    			puts "Trying BFGS .."
     			algorithm BFGS
     			set ok [analyze $res]
     		}
 
             if {$ok != 0} {
-            puts "\nTrying SecantNewton .."
+            puts "Trying SecantNewton .."
     		algorithm SecantNewton
     		set ok [analyze $res]
             }
 
             if {$ok != 0} {
-            puts "\nTrying ModifiedNewton .."
+            puts "Trying ModifiedNewton .."
     		algorithm ModifiedNewton
     		set ok [analyze $res]
             }
 
 		    if {$ok != 0} {
-    			puts "\nTrying Broyden .."
+    			puts "Trying Broyden .."
     			algorithm Broyden 500
     			set ok [analyze $res]
     		}
 
     		if {$ok != 0} {
-    			puts "\nConvergence Failure!\n"
+    			puts "Convergence Failure!\n"
     		}
         }
 	}
