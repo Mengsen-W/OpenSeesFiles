@@ -5,7 +5,8 @@
 # * @Last Modified time: 2020-02-20 20:09:47
 
 wipe
-
+set time [getTime]
+puts "$time"
 puts "\nSystem"
 model BasicBuilder -ndm 3 -ndf 6
 source CyclicFunction.tcl
@@ -45,6 +46,8 @@ puts "End of Pushover"
 Cyclic_Function 2 30 1 2607 1 1E-2 1000
 ModelInfo_Proc model-Elastic.txt
 puts "\nAll of End\n"
+set time [getTime]
+puts "$time"
 
 wipeAnalysis
 wipe
@@ -53,6 +56,8 @@ reset
 
 wipe
 
+set time [getTime]
+puts "$time"
 puts "\nSystem"
 model BasicBuilder -ndm 3 -ndf 6
 source CyclicFunction.tcl
@@ -92,6 +97,8 @@ puts "End of Pushover"
 Cyclic_Function 2 30 1 2607 1 1E-2 1000
 ModelInfo_Proc model-Hysteretic.txt
 puts "\nAll of End\n"
+set time [getTime]
+puts "$time"
 
 wipeAnalysis
 wipe
@@ -100,6 +107,8 @@ reset
 
 wipe
 
+set time [getTime]
+puts "$time"
 puts "\nSystem"
 model BasicBuilder -ndm 3 -ndf 6
 source CyclicFunction.tcl
@@ -139,6 +148,8 @@ puts "End of Pushover"
 Cyclic_Function 2 30 1 2607 1 1E-2 1000
 ModelInfo_Proc model-Steel.txt
 puts "\nAll of End\n"
+set time [getTime]
+puts "$time"
 
 wipeAnalysis
 wipe
