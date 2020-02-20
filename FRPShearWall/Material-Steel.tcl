@@ -2,7 +2,7 @@
 # * @Decription: Material
 # * @Author: Mengsen.Wang
 # * @Date: 2020-02-14 14:10:31
-# * @Last Modified time: 2020-02-14 14:10:31
+# * @Last Modified time: 2020-02-20 13:10:31
 
 # C40 concrete
 nDMaterial PlaneStressUserMaterial 1 40 7 30.8 3.08 -6.16 -0.002 -0.005 0.001 0.05

@@ -55,52 +55,51 @@ proc Cyclic_Function { Ddelta Dnum Dincr Node dof tol iter } {
 #if NOT successful return < 0
 proc Analysis_Proc { Num } {
 	for {set step 1} {$step <=$Num} {incr step} {
-        puts "$step of DisplacementControl Increment"
         set ok 1
         for { set i 1 } { $ok != 0 } { incr i } {
             set res [expr ($i - 1) * 10 + 1]
-            puts "KrylovNewton.."
+            puts "No. $step of Cyclic. $res of Anaylsis KrylovNewton.."
     		algorithm KrylovNewton
             set ok [analyze $res]
 
     		if {$ok != 0} {
-    			puts "Trying NewtonWithLineSearch .."
+    			puts "NO. $step of Cyclic. $res of Anaylsis Trying NewtonWithLineSearch .."
     			algorithm NewtonLineSearch
     			set ok [analyze $res]
     		}
 
             if {$ok != 0} {
-            puts "Trying Newton .."
+            puts "No. $step of Cyclic. $res of Anaylsis Trying Newton .."
     		algorithm Newton
     		set ok [analyze $res]
             }
 
     		if {$ok != 0} {
-    			puts "Trying BFGS .."
+    			puts "No. $step of Cyclic. $res of Anaylsis Trying BFGS .."
     			algorithm BFGS
     			set ok [analyze $res]
     		}
 
             if {$ok != 0} {
-            puts "Trying SecantNewton .."
+            puts "NO. $step of Cyclic. $res of Anaylsis Trying SecantNewton .."
     		algorithm SecantNewton
     		set ok [analyze $res]
             }
 
             if {$ok != 0} {
-            puts "Trying ModifiedNewton .."
+            puts "No. $step of Cyclic. $res of Anaylsis Trying ModifiedNewton .."
     		algorithm ModifiedNewton
     		set ok [analyze $res]
             }
 
 		    if {$ok != 0} {
-    			puts "Trying Broyden .."
+    			puts "No. $step of Cyclic. $res of Anaylsis Trying Broyden .."
     			algorithm Broyden 500
     			set ok [analyze $res]
     		}
 
     		if {$ok != 0} {
-    			puts "Convergence Failure!\n"
+    			puts "No. $step of Cyclic. $res of Analysis Convergence Failure!\n"
     		}
         }
 	}
