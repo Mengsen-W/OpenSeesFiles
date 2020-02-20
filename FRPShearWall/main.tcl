@@ -49,6 +49,8 @@ puts "\nAll of End\n"
 wipeAnalysis
 wipe
 
+reset
+
 wipe
 
 puts "\nSystem"
@@ -93,6 +95,8 @@ puts "\nAll of End\n"
 
 wipeAnalysis
 wipe
+
+reset
 
 wipe
 

@@ -111,6 +111,9 @@ proc ModelInfo_Proc { FileName } {
     logFile $FileName
     print -node
     print -ele
+    getTime
+    testIter
+    testNorms
     wipe
 }
 
