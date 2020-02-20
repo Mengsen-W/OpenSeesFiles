@@ -67,17 +67,17 @@ for { set j 5 } { $j <= 9 } { incr j } {
     }
 }
 
-# #FRP
+#FRP
 for { set i 1 } { $i < 26 } { incr i } {
     set TrussID [expr 2* 10000 + $i]
     set nodei [expr $i *100 + 2]
     set nodej [expr ($i + 1) * 100 + 2]
-    element truss $TrussID $nodei $nodej 628.32 5
+    element truss $TrussID $nodei $nodej 628.32 4
 }
 
 for { set i 1} { $i < 26 } { incr i } {
     set TrussID [expr 12 * 10000 + $i]
     set nodei [expr $i *100 + 12]
     set nodej [expr ($i + 1) * 100 + 12]
-    element truss $TrussID $nodei $nodej 628.32 5
+    element truss $TrussID $nodei $nodej 628.32 4
 }
