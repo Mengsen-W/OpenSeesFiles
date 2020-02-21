@@ -8,16 +8,16 @@
 nDMaterial PlaneStressUserMaterial 1 40 7 30.8 3.08 -6.16 -0.002 -0.005 0.001 0.05
 nDMaterial PlateFromPlaneStress 2 1 1.83E4
 
-# 不按照实验数据 第一个系数为10
+# 不按照实验数据 第一个系数为15
 
 # middleSFCB
-uniaxialMaterial Steel02 3 281 163712 0.001 10 0.925 0.15
+uniaxialMaterial Steel02 3 523 66202 0.001 15 0.925 0.15
 
 # mainSFCB
-uniaxialMaterial Steel02 4 366 130714 0.001 10 0.925 0.15
+uniaxialMaterial Steel02 4 500 100714 0.001 15 0.925 0.15
 
 # FRP
-uniaxialMaterial Steel02 5 953 52000 0.001 10 0.925 0.15
+uniaxialMaterial Steel02 5 953 52000 0.001 15 0.925 0.15
 
 # FRP 箍筋层
 nDMaterial PlateRebar 6 5 0
