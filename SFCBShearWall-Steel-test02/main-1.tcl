@@ -4,9 +4,7 @@
 # * @Date: 2020-02-13 20:09:06
 # * @Last Modified time: 2020-02-21 20:09:47
 
-## 将中间SFCB变为钢筋层单元
 reset
-
 wipe
 
 puts "\nSystem"
@@ -45,8 +43,7 @@ puts "End of Pushover"
 
 # 若 Dnum 设为1，则 Ddelta 为每一圈的最大位移
 # 若 Dnum 不唯一，则 Ddelta 为每圈的增量
-Cyclic_Function 2 35 0.5 2607 1 1E-2 1000
+Cyclic_Function 2 50 0.5 2607 1 1E-2 1000
 ModelInfo_Proc model-Steel-1.txt
 puts "\nAll of End\n"
-
 wipe

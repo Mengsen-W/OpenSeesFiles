@@ -62,6 +62,18 @@ proc Analysis_Proc { Num } {
     		algorithm KrylovNewton
             set ok [analyze $res]
 
+            if {$ok != 0} {
+            puts "NO. $step of Cyclic. $res of Anaylsis Trying SecantNewton .."
+    		algorithm SecantNewton
+    		set ok [analyze $res]
+            }
+
+            if {$ok != 0} {
+            puts "No. $step of Cyclic. $res of Anaylsis Trying ModifiedNewton .."
+    		algorithm ModifiedNewton
+    		set ok [analyze $res]
+            }
+
     		if {$ok != 0} {
     			puts "NO. $step of Cyclic. $res of Anaylsis Trying NewtonWithLineSearch .."
     			algorithm NewtonLineSearch 0.8
@@ -74,30 +86,17 @@ proc Analysis_Proc { Num } {
     		set ok [analyze $res]
             }
 
-		    # if {$ok != 0} {
-    		# 	puts "No. $step of Cyclic. $res of Anaylsis Trying Broyden .."
-    		# 	algorithm Broyden 500
-    		# 	set ok [analyze $res]
-    		# }
+		    if {$ok != 0} {
+    			puts "No. $step of Cyclic. $res of Anaylsis Trying Broyden .."
+    			algorithm Broyden 500
+    			set ok [analyze $res]
+    		}
 
     		if {$ok != 0} {
     			puts "No. $step of Cyclic. $res of Anaylsis Trying BFGS .."
     			algorithm BFGS
     			set ok [analyze $res]
     		}
-
-            # if {$ok != 0} {
-            # puts "NO. $step of Cyclic. $res of Anaylsis Trying SecantNewton .."
-    		# algorithm SecantNewton
-    		# set ok [analyze $res]
-            # }
-
-            # if {$ok != 0} {
-            # puts "No. $step of Cyclic. $res of Anaylsis Trying ModifiedNewton .."
-    		# algorithm ModifiedNewton
-    		# set ok [analyze $res]
-            # }
-
 
     		if {$ok != 0} {
     			puts "No. $step of Cyclic. $res of Analysis Convergence Failure!\n"
