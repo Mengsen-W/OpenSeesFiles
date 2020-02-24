@@ -1,9 +1,17 @@
 {
     "cSpell.ignoreWords": [
+        "beam",
         "bfgs",
+        "column",
+        "disp",
+        "fsam",
         "hysteretic",
         "krylov",
+        "mvelm",
+        "mvlem",
+        "orakcal",
         "pinchx",
-        "pinchy"
+        "pinchy",
+        "sfcb"
     ]
 }

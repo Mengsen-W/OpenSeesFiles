@@ -60,41 +60,41 @@ proc Analysis_Proc { Num } {
             set res [expr ($i - 1) * 10 + 1]
             puts "No. $step of Cyclic. $res of Anaylsis KrylovNewton.."
     		algorithm KrylovNewton
-            set ok [analyze $res]
+            set ok [analyze 1]
 
-            if {$ok != 0} {
-            puts "NO. $step of Cyclic. $res of Anaylsis Trying SecantNewton .."
-    		algorithm SecantNewton
-    		set ok [analyze $res]
-            }
+            # if {$ok != 0} {
+            # puts "NO. $step of Cyclic. $res of Anaylsis Trying SecantNewton .."
+    		# algorithm SecantNewton
+    		# set ok [analyze $res]
+            # }
 
-            if {$ok != 0} {
-            puts "No. $step of Cyclic. $res of Anaylsis Trying ModifiedNewton .."
-    		algorithm ModifiedNewton
-    		set ok [analyze $res]
-            }
+            # if {$ok != 0} {
+            # puts "No. $step of Cyclic. $res of Anaylsis Trying ModifiedNewton .."
+    		# algorithm ModifiedNewton
+    		# set ok [analyze $res]
+            # }
 
-    		if {$ok != 0} {
-    			puts "NO. $step of Cyclic. $res of Anaylsis Trying NewtonWithLineSearch .."
-    			algorithm NewtonLineSearch 0.8
-    			set ok [analyze $res]
-    		}
+    		# if {$ok != 0} {
+    		# 	puts "No. $step of Cyclic. $res of Anaylsis Trying BFGS .."
+    		# 	algorithm BFGS
+    		# 	set ok [analyze $res]
+    		# }
 
-            if {$ok != 0} {
-            puts "No. $step of Cyclic. $res of Anaylsis Trying Newton .."
-    		algorithm Newton
-    		set ok [analyze $res]
-            }
+    		# if {$ok != 0} {
+    		# 	puts "NO. $step of Cyclic. $res of Anaylsis Trying NewtonWithLineSearch .."
+    		# 	algorithm NewtonLineSearch 0.8
+    		# 	set ok [analyze $res]
+    		# }
+
+            # if {$ok != 0} {
+            # puts "No. $step of Cyclic. $res of Anaylsis Trying Newton .."
+    		# algorithm Newton
+    		# set ok [analyze $res]
+            # }
 
 		    if {$ok != 0} {
     			puts "No. $step of Cyclic. $res of Anaylsis Trying Broyden .."
-    			algorithm Broyden 500
-    			set ok [analyze $res]
-    		}
-
-    		if {$ok != 0} {
-    			puts "No. $step of Cyclic. $res of Anaylsis Trying BFGS .."
-    			algorithm BFGS
+    			algorithm Broyden [expr 500 * $res ]
     			set ok [analyze $res]
     		}
 
