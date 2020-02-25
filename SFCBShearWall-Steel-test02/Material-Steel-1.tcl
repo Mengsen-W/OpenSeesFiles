@@ -10,13 +10,13 @@ nDMaterial PlateFromPlaneStress 2 1 1.83E4
 
 
 # middleSFCB
-uniaxialMaterial Steel02 3 675 164705 0.01 10 0.925 0.15
+uniaxialMaterial Steel02 3 675 164705 0.05 10 0.925 0.15
 
 # mainSFCB
-uniaxialMaterial Steel02 4 581 130135 0.01 10 0.925 0.15
+uniaxialMaterial Steel02 4 581 130135 0.05 10 0.925 0.15
 
 # FRP
-uniaxialMaterial Steel02 5 953 52000 0.01 10 0.925 0.15
+uniaxialMaterial Steel02 5 953 52000 0.05 10 0.925 0.15
 
 # FRP 箍筋层
 nDMaterial PlateRebar 6 5 0
