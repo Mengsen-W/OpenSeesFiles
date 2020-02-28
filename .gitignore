@@ -1,3 +1,5 @@
 *.out
 *.code-workspace
 *.txt
+*.json
+
