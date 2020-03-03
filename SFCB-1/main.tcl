@@ -32,7 +32,7 @@ Gravity_Proc 10
 puts "End of Gravity"
 
 puts "\nOutput"
-recorder Node -file F-Steel-1-Disp.txt -time -node 2607 -dof 1 disp
+recorder Node -file F-Disp.txt -time -node 2607 -dof 1 disp
 puts "End of Output"
 
 puts "\nPushover"
@@ -43,7 +43,7 @@ puts "End of Pushover"
 
 # 若 Dnum 设为1，则 Ddelta 为每一圈的最大位移
 # 若 Dnum 不唯一，则 Ddelta 为每圈的增量
-Cyclic_Function 2 35 0.2 2607 1 1E-2 1000
-ModelInfo_Proc model-Steel-1.txt
+Cyclic_Function 2 35 0.5 2607 1 1E-2 1000
+ModelInfo_Proc model-1.txt
 puts "\nAll of End\n"
 wipe
