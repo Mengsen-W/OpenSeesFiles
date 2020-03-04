@@ -17,7 +17,7 @@ source Nodes.tcl
 puts "End of Nodes"
 
 puts "\nMaterial"
-source Material-Origin.tcl
+source Material-1.tcl
 puts "End of Material"
 
 puts "\nElement"
@@ -32,7 +32,7 @@ Gravity_Proc 10
 puts "End of Gravity"
 
 puts "\nOutput"
-recorder Node -file F-Disp.txt -time -node 2607 -dof 1 disp
+recorder Node -file F-Disp-1.txt -time -node 2607 -dof 1 disp
 puts "End of Output"
 
 puts "\nPushover"
