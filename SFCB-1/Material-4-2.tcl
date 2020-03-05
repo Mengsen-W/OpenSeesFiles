@@ -2,11 +2,11 @@
 # * @Decription: Material
 # * @Author: Mengsen.Wang
 # * @Date: 2020-02-14 14:10:31
-# * @Last Modified time: 2020-03-03 18:10:31
+# * @Last Modified time: 2020-03-05 8:10:31
 
 # C40 concrete
-# 修改抗剪系数为 0.2
-nDMaterial PlaneStressUserMaterial 1 40 7 30.6 3.06 -6.16 -0.002 -0.005 0.001 0.2
+# 修改抗剪系数为 0.52
+nDMaterial PlaneStressUserMaterial 1 40 7 30.6 3.06 -6.16 -0.002 -0.005 0.001 0.52
 nDMaterial PlateFromPlaneStress 2 1 1.83E4
 
 
