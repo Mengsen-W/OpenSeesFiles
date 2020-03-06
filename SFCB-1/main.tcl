@@ -43,7 +43,7 @@ puts "End of Pushover"
 
 # 若 Dnum 设为1，则 Ddelta 为每一圈的最大位移
 # 若 Dnum 不唯一，则 Ddelta 为每圈的增量
-Cyclic_Function 2 35 1 2607 1 1E-2 1000
+Cyclic_Function 2 35 0.8 2607 1 1E-2 1000
 ModelInfo_Proc modelInfo.txt
 puts "\nAll of End\n"
 wipe
