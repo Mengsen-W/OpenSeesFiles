@@ -2,7 +2,7 @@
 # * @Descripition: function of Cyclic
 # * @Author: Mengsen.Wang
 # * @Date: 2020-02-11 21:33:52
-# * @Last Modified Time: 2020-2-12 17:33:01
+# * @Last Modified Time: 2020-03-06 16:40:53
 
 #Ddelta: Displacement increment of each cyclic loading
 #每一个循环圈的位移增量
@@ -32,21 +32,17 @@ proc Cyclic_Function { Ddelta Dnum Dincr Node dof tol iter } {
     for {set ii 1} {$ii <=$Dnum} {incr ii} {
         set u [expr $Ddelta*$ii]
         set negdel [expr $Dincr * -1]
+	    puts "$ii Cyclic of Displacement, Plus of Displacement..."
         integrator DisplacementControl $Node $dof $Dincr
-	    puts "$ii Cyclic of Displacement"
-        puts "Plus of Displacement"
         Analysis_Proc [expr int($u/$Dincr)]
+	    puts "$ii Cyclic of Displacement, Minus of Displacement..."
         integrator DisplacementControl $Node $dof $negdel
-	    puts "$ii Cyclic of Displacement"
-        puts "Minus of Displacement"
         Analysis_Proc [expr int(2*$u/$Dincr)]
+	    puts "$ii Cyclic of Displacement, Back to Zero..."
         integrator DisplacementControl $Node $dof $Dincr
-	    puts "$ii Cyclic of Displacement"
-        puts "Back to Zero"
         Analysis_Proc [expr int($u/$Dincr)]
     }
 }
-
 
 #默认Newton → Newton -initila → Broyden → NewtonWithLineSearch
 #Num: the number of analyze step
@@ -54,53 +50,49 @@ proc Cyclic_Function { Ddelta Dnum Dincr Node dof tol iter } {
 #analyze if successful return 0
 #if NOT successful return < 0
 proc Analysis_Proc { Num } {
-	for {set step 1} {$step <=$Num} {incr step} {
-        set ok 1
-        for { set i 1 } { $ok != 0 } { incr i } {
-            set res [expr ($i - 1) * 10 + 1]
-            puts "No. $step of Cyclic. $res of Anaylsis KrylovNewton.."
-    		algorithm KrylovNewton
+    for {set step 1} {$step <=$Num} {incr step} {
+        puts "No. $step of Cyclic. Anaylsis KrylovNewton.."
+        algorithm KrylovNewton
+        set ok [analyze 1]
+
+        # if {$ok != 0} {
+        # puts "NO. $step of Cyclic.Anaylsis Trying SecantNewton .."
+        # algorithm SecantNewton
+        # set ok [analyze 1]
+        # }
+
+        # if {$ok != 0} {
+        # puts "No. $step of Cyclic.Anaylsis Trying ModifiedNewton .."
+        # algorithm ModifiedNewton
+        # set ok [analyze 1]
+        # }
+
+        # if {$ok != 0} {
+        # 	puts "NO. $step of Cyclic. Anaylsis Trying NewtonWithLineSearch .."
+        # 	algorithm NewtonLineSearch
+        # 	set ok [analyze 1]
+        # }
+
+        # if {$ok != 0} {
+        # puts "No. $step of Cyclic.Anaylsis Trying Newton .."
+        # algorithm Newton
+        # set ok [analyze 1]
+        # }
+
+        # if {$ok != 0} {
+        # 	puts "No. $step of Cyclic.Anaylsis Trying BFGS .."
+        # 	algorithm BFGS
+        # 	set ok [analyze 1]
+        # }
+
+        if {$ok != 0} {
+            puts "No. $step of Cyclic. Anaylsis Trying Broyden .."
+            algorithm Broyden 500
             set ok [analyze 1]
+        }
 
-            # if {$ok != 0} {
-            # puts "NO. $step of Cyclic. $res of Anaylsis Trying SecantNewton .."
-    		# algorithm SecantNewton
-    		# set ok [analyze $res]
-            # }
-
-            # if {$ok != 0} {
-            # puts "No. $step of Cyclic. $res of Anaylsis Trying ModifiedNewton .."
-    		# algorithm ModifiedNewton
-    		# set ok [analyze $res]
-            # }
-
-    		# if {$ok != 0} {
-    		# 	puts "No. $step of Cyclic. $res of Anaylsis Trying BFGS .."
-    		# 	algorithm BFGS
-    		# 	set ok [analyze $res]
-    		# }
-
-    		# if {$ok != 0} {
-    		# 	puts "NO. $step of Cyclic. $res of Anaylsis Trying NewtonWithLineSearch .."
-    		# 	algorithm NewtonLineSearch 0.8
-    		# 	set ok [analyze $res]
-    		# }
-
-            # if {$ok != 0} {
-            # puts "No. $step of Cyclic. $res of Anaylsis Trying Newton .."
-    		# algorithm Newton
-    		# set ok [analyze $res]
-            # }
-
-		    if {$ok != 0} {
-    			puts "No. $step of Cyclic. $res of Anaylsis Trying Broyden .."
-    			algorithm Broyden [expr 500 * $res ]
-    			set ok [analyze $res]
-    		}
-
-    		if {$ok != 0} {
-    			puts "No. $step of Cyclic. $res of Analysis Convergence Failure!\n"
-    		}
+        if {$ok != 0} {
+            puts "No. $step of Cyclic. Analysis Convergence Failure!\n"
         }
 	}
 }
