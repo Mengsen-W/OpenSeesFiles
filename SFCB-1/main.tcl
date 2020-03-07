@@ -7,9 +7,11 @@
 reset
 wipe
 
+source Cyclic.tcl
+ModelInfo_Proc modelInfo.txt
+
 puts "\nSystem"
 model BasicBuilder -ndm 3 -ndf 6
-source Cyclic.tcl
 puts "End of System"
 
 puts "\nNodes"
@@ -17,7 +19,7 @@ source Nodes.tcl
 puts "End of Nodes"
 
 puts "\nMaterial"
-source Material-0.6-15.tcl
+source Material-0.5-15.tcl
 puts "End of Material"
 
 puts "\nElement"
@@ -32,7 +34,7 @@ Gravity_Proc 10
 puts "End of Gravity"
 
 puts "\nOutput"
-recorder Node -file Disp.txt -time -node 2607 -dof 1 disp
+recorder Node -file Disp-0.5-15.txt -time -node 2607 -dof 1 disp
 puts "End of Output"
 
 puts "\nPushover"
@@ -43,8 +45,7 @@ puts "End of Pushover"
 
 # 若 Dnum 设为1，则 Ddelta 为每一圈的最大位移
 # 若 Dnum 不唯一，则 Ddelta 为每圈的增量
-Cyclic_Function 2 35 0.6 2607 1 1E-2 1000
-ModelInfo_Proc modelInfo.txt
+Cyclic_Function 2 35 0.5 2607 1 1E-2 1000
 puts "\nAll of End\n"
 wipe
 reset
