@@ -52,7 +52,7 @@ proc Cyclic_Function { Ddelta Dnum Dincr Node dof tol iter } {
 proc Analysis_Proc { Num } {
     for {set step 1} {$step <=$Num} {incr step} {
         puts "No. $step of Cyclic. Anaylsis KrylovNewton.."
-        algorithm KrylovNewton
+        algorithm KrylovNewton -maxDim 6
         set ok [analyze 1]
 
         # if {$ok != 0} {

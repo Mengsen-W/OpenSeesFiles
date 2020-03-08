@@ -10,7 +10,7 @@ nDMaterial PlateFromPlaneStress 2 1 1.83E4
 
 
 # middleSFCB
-uniaxialMaterial Steel02 3 250 157035 0.23 15 0.925 0.15
+uniaxialMaterial Steel02 3 250 157035 0.23 20 0.925 0.15
 
 # mainSFCB
 uniaxialMaterial Steel02 4 365 129443 0.12 10 0.925 0.15
