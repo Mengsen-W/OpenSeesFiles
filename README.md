@@ -13,4 +13,4 @@
 5. [FRP剪力墙](https://github.com/Mengsen-W/OpenSeesFiles/tree/master/SFCB-1 "SFCB")
 
 ## 一些 OpenSees 的心得体会
- - [Mengsen—W/NoteBook/OpenSees](https://github.com/Mengsen-W/NoteBook/blob/master/OpenSees.md "OpenSees")
+ - [Mengsen—W/NoteBook/OpenSees](https://github.com/Mengsen-W/NoteBook/tree/master/OpenSees "OpenSees")
