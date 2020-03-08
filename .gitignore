@@ -2,5 +2,5 @@
 *.code-workspace
 *.txt
 *.json
-.vsocde
+.vscode
 .history
