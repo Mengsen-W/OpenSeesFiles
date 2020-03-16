@@ -46,7 +46,7 @@ puts "End of Pushover"
 
 # 若 Dnum 设为1，则 Ddelta 为每一圈的最大位移
 # 若 Dnum 不唯一，则 Ddelta 为每圈的增量
-Cyclic_Function 0.1 800 0.1 2607 1 1E-2 1000
+Cyclic_Function 1 80 1 2607 1 1E-2 1000
 puts "\nAll of End\n"
 wipe
 reset

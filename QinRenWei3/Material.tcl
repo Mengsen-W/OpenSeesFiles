@@ -6,7 +6,7 @@
 
 # C40 concrete
 # 修改抗剪系数为 0.6
-nDMaterial PlaneStressUserMaterial 1 40 7 30.6 3.06 -6.16 -0.002 -0.005 0.001 0.6
+nDMaterial PlaneStressUserMaterial 1 40 7 30.6 3.06 -6.16 -0.002 -0.005 0.001 0.4
 nDMaterial PlateFromPlaneStress 2 1 1.83E4
 
 
