@@ -14,9 +14,9 @@
 ## center of shear wall
 puts "center of shear wall"
 for { set Storey 1 } { $Storey <= 26 } { incr Storey } {
-    for { set i 4 } { $i <= 10 } { incr i } {
+    for { set i 5 } { $i <= 11 } { incr i } {
     set nodelTag [expr $Storey * 100 + $i]
-    node $nodelTag [expr ($i - 4) * 100 + 200] 0 [expr ($Storey - 1) * 80]
+    node $nodelTag [expr ($i - 5) * 100 + 200] 0 [expr ($Storey - 1) * 80]
     }
 }
 
@@ -27,17 +27,23 @@ for { set Storey 1 } {$Storey <= 26} {incr Storey} {
     node $nodelTag1 0 0 [expr ($Storey - 1) * 80]
 
     set nodelTag2 [expr $Storey * 100 + 2]
-    node $nodelTag2 25 0 [expr ($Storey - 1) * 80]
+    node $nodelTag2 20 0 [expr ($Storey - 1) * 80]
 
     set nodelTag3 [expr $Storey * 100 + 3]
-    node $nodelTag3 112.5 0 [expr ($Storey - 1) * 80]
+    node $nodelTag3 55 0 [expr ($Storey - 1) * 80]
 
-    set nodelTag11 [expr $Storey * 100 + 11]
-    node $nodelTag11 887.5 0 [expr ($Storey - 1) * 80]
+    set nodelTag4 [expr $Storey * 100 + 4]
+    node $nodelTag4 75 0 [expr ($Storey - 1) * 80]
 
     set nodelTag12 [expr $Storey * 100 + 12]
-    node $nodelTag12 975 0 [expr ($Storey - 1) * 80]
+    node $nodelTag12 875 0 [expr ($Storey - 1) * 80]
 
     set nodelTag13 [expr $Storey * 100 + 13]
-    node $nodelTag13 1000 0 [expr ($Storey - 1) * 80]
+    node $nodelTag13 950 0 [expr ($Storey - 1) * 80]
+
+    set nodelTag14 [expr $Storey * 100 + 14]
+    node $nodelTag14 980 0 [expr ($Storey - 1) * 80]
+
+    set nodelTag15 [expr $Storey * 100 + 15]
+    node $nodelTag15 1000 0 [expr ($Storey - 1) * 80]
 }

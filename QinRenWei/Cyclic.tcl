@@ -104,8 +104,6 @@ proc ModelInfo_Proc { FileName } {
     print -node
     print -ele
     getTime
-    testIter
-    testNorms
 }
 
 
