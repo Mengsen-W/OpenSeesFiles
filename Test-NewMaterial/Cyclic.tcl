@@ -33,16 +33,31 @@ proc Cyclic_Function { Ddelta Dnum Dincr Node dof tol iter } {
         set u [expr $Ddelta*$ii]
         set negdel [expr $Dincr * -1]
 	    puts "$ii Cyclic of Displacement, Plus of Displacement..."
-        integrator DisplacementControl $Node $dof $Dincr
-        Analysis_Proc [expr int($u/$Dincr)]
+        Iterator  $Node $dof $u $Dincr
 	    puts "$ii Cyclic of Displacement, Minus of Displacement..."
-        integrator DisplacementControl $Node $dof $negdel
-        Analysis_Proc [expr int(2*$u/$Dincr)]
+        Iterator  $Node $dof [expr 2*$u] $negdel
 	    puts "$ii Cyclic of Displacement, Back to Zero..."
-        integrator DisplacementControl $Node $dof $Dincr
-        Analysis_Proc [expr int($u/$Dincr)]
+        Iterator  $Node $dof $u $Dincr
     }
 }
+
+
+proc Iterator { Node dof u incr } {
+    while { true } {
+        integrator DisplacementControl $Node $dof $incr
+        set ok [ Analysis_Proc [expr abs($u/$incr)] ]
+        puts $ok
+
+        if { $ok == 0 } {
+            break;
+        }
+        if { $ok != 0 } {
+            # $incr [expr $incr / 2];
+            puts $incr
+        }
+    }
+}
+
 
 #默认Newton → Newton -initila → Broyden → NewtonWithLineSearch
 #Num: the number of analyze step
@@ -50,9 +65,10 @@ proc Cyclic_Function { Ddelta Dnum Dincr Node dof tol iter } {
 #analyze if successful return 0
 #if NOT successful return < 0
 proc Analysis_Proc { Num } {
+    puts $Num
     for {set step 1} {$step <=$Num} {incr step} {
         puts "No. $step of Cyclic. Anaylsis KrylovNewton.."
-        algorithm KrylovNewton -maxDim 6
+        algorithm KrylovNewton
         set ok [analyze 1]
 
         # if {$ok != 0} {
@@ -85,16 +101,18 @@ proc Analysis_Proc { Num } {
         # 	set ok [analyze 1]
         # }
 
-        if {$ok != 0} {
-            puts "No. $step of Cyclic. Anaylsis Trying Broyden .."
-            algorithm Broyden 500
-            set ok [analyze 1]
-        }
+        # if {$ok != 0} {
+        #     puts "No. $step of Cyclic. Anaylsis Trying Broyden .."
+        #     algorithm Broyden 500
+        #     set ok [analyze 1]
+        # }
 
         if {$ok != 0} {
             puts "No. $step of Cyclic. Analysis Convergence Failure!\n"
+            return -1
         }
 	}
+    return 0
 }
 
 #FileNme：File name

@@ -52,8 +52,14 @@ proc Cyclic_Function { Ddelta Dnum Dincr Node dof tol iter } {
 proc Analysis_Proc { Num } {
     for {set step 1} {$step <=$Num} {incr step} {
         puts "No. $step of Cyclic. Anaylsis KrylovNewton.."
-        algorithm KrylovNewton
+        algorithm KrylovNewton -maxDim 10
         set ok [analyze 1]
+
+        if {$ok != 0} {
+        puts "No. $step of Cyclic.Anaylsis Trying Newton .."
+        algorithm Newton
+        set ok [analyze 1]
+        }
 
         # if {$ok != 0} {
         # puts "NO. $step of Cyclic.Anaylsis Trying SecantNewton .."
@@ -89,6 +95,12 @@ proc Analysis_Proc { Num } {
             puts "No. $step of Cyclic. Anaylsis Trying Broyden .."
             algorithm Broyden 500
             set ok [analyze 1]
+        }
+
+        if {$ok != 0} {
+        puts "No. $step of Cyclic.Anaylsis Trying Newton .."
+        algorithm Newton
+        set ok [analyze 1]
         }
 
         if {$ok != 0} {

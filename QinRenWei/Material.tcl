@@ -6,8 +6,8 @@
 
 # C40 concrete
 # 修改抗剪系数为 0.6
-nDMaterial PlaneStressUserMaterial 1 40 7 30.6 3.06 -6.16 -0.002 -0.005 0.001 0.6
-nDMaterial PlateFromPlaneStress 2 1 1.83E4
+nDMaterial PlaneStressUserMaterial 1 40 7 30.6 3.06 -6.16 -0.002 -0.005 0.001 0.1
+nDMaterial PlateFromPlaneStress 2 1 1.23E4
 
 
 # middleSFCB
@@ -17,7 +17,7 @@ uniaxialMaterial Steel02 3 250 157035 0.23 15 0.925 0.15
 uniaxialMaterial Steel02 4 365 129443 0.12 10 0.925 0.15
 
 # FRP
-uniaxialMaterial Steel02 5 953 52000 1e-15 10 0.925 0.15
+uniaxialMaterial Steel02 5 953 52000 1e-15 15 0.925 0.15
 
 # FRP 箍筋层
 nDMaterial PlateRebar 6 5 0

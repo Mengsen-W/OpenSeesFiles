@@ -8,7 +8,7 @@ reset
 wipe
 
 source Cyclic.tcl
-ModelInfo_Proc modelInfo.txt
+ModelInfo_Proc modelLog.txt
 puts "\nSystem"
 model BasicBuilder -ndm 3 -ndf 6
 puts "End of System"
@@ -34,8 +34,6 @@ puts "End of Gravity"
 
 puts "\nOutput"
 recorder Node -file Disp-middle.txt -time -node 2608 -dof 1 disp
-recorder Node -file Disp-left.txt -time -node 2601 -dof 1 disp
-recorder Node -file Disp-right.txt -time -node 2615 -dof 1 disp
 puts "End of Output"
 
 puts "\nPushover"
@@ -46,8 +44,10 @@ puts "End of Pushover"
 
 # 若 Dnum 设为1，则 Ddelta 为每一圈的最大位移
 # 若 Dnum 不唯一，则 Ddelta 为每圈的增量
-Cyclic_Function 0.1 800 0.1 2607 1 1E-2 1000
+Cyclic_Function 1 80 1 2608 1 1E-2 1000
 puts "\nAll of End\n"
+ModelInfo_Proc modelInfo.txt
+
 wipe
 reset
 
