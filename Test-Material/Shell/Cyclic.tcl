@@ -51,48 +51,48 @@ proc Cyclic_Function { Ddelta Dnum Dincr Node dof tol iter } {
 #if NOT successful return < 0
 proc Analysis_Proc { Num } {
     for {set step 1} {$step <=$Num} {incr step} {
-        puts "No. $step of Cyclic. Anaylsis KrylovNewton.."
+        # puts "No. $step of Cyclic. Anaylsis KrylovNewton.."
         algorithm KrylovNewton -maxDim 10
         set ok [analyze 1]
 
         if {$ok != 0} {
-        puts "No. $step of Cyclic.Anaylsis Trying Newton .."
+        # puts "No. $step of Cyclic.Anaylsis Trying Newton .."
         algorithm Newton
         set ok [analyze 1]
         }
 
         if {$ok != 0} {
-        puts "NO. $step of Cyclic.Anaylsis Trying SecantNewton .."
+        # puts "NO. $step of Cyclic.Anaylsis Trying SecantNewton .."
         algorithm SecantNewton
         set ok [analyze 1]
         }
 
         if {$ok != 0} {
-        puts "No. $step of Cyclic.Anaylsis Trying ModifiedNewton .."
+        # puts "No. $step of Cyclic.Anaylsis Trying ModifiedNewton .."
         algorithm ModifiedNewton
         set ok [analyze 1]
         }
 
         if {$ok != 0} {
-        	puts "NO. $step of Cyclic. Anaylsis Trying NewtonWithLineSearch .."
+        	# puts "NO. $step of Cyclic. Anaylsis Trying NewtonWithLineSearch .."
         	algorithm NewtonLineSearch
         	set ok [analyze 1]
         }
 
         if {$ok != 0} {
-        puts "No. $step of Cyclic.Anaylsis Trying Newton .."
+        # puts "No. $step of Cyclic.Anaylsis Trying Newton .."
         algorithm Newton
         set ok [analyze 1]
         }
 
         if {$ok != 0} {
-        	puts "No. $step of Cyclic.Anaylsis Trying BFGS .."
+        	# puts "No. $step of Cyclic.Anaylsis Trying BFGS .."
         	algorithm BFGS
         	set ok [analyze 1]
         }
 
         if {$ok != 0} {
-            puts "No. $step of Cyclic. Anaylsis Trying Broyden .."
+            # puts "No. $step of Cyclic. Anaylsis Trying Broyden .."
             algorithm Broyden 500000
             set ok [analyze 1]
         }

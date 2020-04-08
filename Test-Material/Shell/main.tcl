@@ -20,11 +20,11 @@ source Elements.tcl
 puts "Gravity"
 source Gravity.tcl
 Gravity_Proc 10
-recorder Node -file Shell/Disp.txt -time -node 4 -dof 1 disp
+recorder Node -file Shell/Disp.txt -time -node 302 -dof 1 disp
 pattern Plain 2 Linear {
-    load 4 1E3 0 0 0 0 0
+    load 302 1E3 0 0 0 0 0
 }
-Cyclic_Function 1 500 1 4 1 1E-2 100000
+Cyclic_Function 1 500 0.01 302 1 1E-2 10000
 ModelInfo_Proc Shell/modelInfo.txt
 wipe
 reset

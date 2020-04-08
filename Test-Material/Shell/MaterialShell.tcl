@@ -11,4 +11,4 @@ nDMaterial PlateFromPlaneStress 2 1 1.23E4
 # material    absolute thickness   angle(steel)    material tag
 ##cover                 200                              2
 # 分层必须大于2
-section LayeredShell 1 20 2 10 2 10 2 10 2 10 2 10 2 10 2 10 2 10 2 10 2 10 2 10 2 10 2 10 2 10 2 10 2 10 2 10 2 10 2 10 2 10
+section LayeredShell 1 3 2 66.67 2 66.67 2 66.67
