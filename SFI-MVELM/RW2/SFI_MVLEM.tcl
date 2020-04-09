@@ -48,8 +48,8 @@ uniaxialMaterial ConcreteCM 3 -45.32 -0.0026 32730 7 3.3 4.06 0.00025 1.2 1E4
 ##UnConfined Concrete
 uniaxialMaterial ConcreteCM 4 -42.85 -0.002 32730 7 2.3 4.06 0.00025 1.2 1E4
 
-nDMaterial FSAM 6 0 2 1 3 $rouX1 $sro1 $nu $alfadow 
-nDMaterial FSAM 7 0 2 2 4 $rouX2 $sro2 $nu $alfadow 
+nDMaterial FSAM 6 0 2 1 3 $rouX1 $sro1 $nu $alfadow
+nDMaterial FSAM 7 0 2 2 4 $rouX2 $sro2 $nu $alfadow
 
 puts "Element"
 for {set i 1 } { $i <= $ElementNum } { incr i } {
