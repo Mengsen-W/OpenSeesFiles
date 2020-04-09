@@ -33,7 +33,7 @@ puts "Node"
 for { set i  0} { $i <= $ElementNum } { incr i} {
     set Nodeid [expr $i + 1]
     set Nodev [expr $deltaH * $i]
-    node $Nodeid 0 $Nodev   
+    node $Nodeid 0 $Nodev
 }
 
 fix 1 1 1 1
