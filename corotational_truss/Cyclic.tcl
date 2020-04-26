@@ -28,7 +28,6 @@ proc Cyclic_Function { Ddelta Dnum Dincr Node dof tol iter } {
     numberer RCM
     system UmfPack
     test NormDispIncr $tol $iter 0
-    analysis Static
     for {set ii 1} {$ii <=$Dnum} {incr ii} {
         set u [expr $Ddelta*$ii]
         set negdel [expr $Dincr * -1]
@@ -52,12 +51,14 @@ proc Cyclic_Function { Ddelta Dnum Dincr Node dof tol iter } {
 proc Analysis_Proc { Num } {
     for {set step 1} {$step <=$Num} {incr step} {
         puts "No. $step of Cyclic. Anaylsis KrylovNewton.."
-        algorithm KrylovNewton
+        algorithm KrylovNewton -maxDim 10
+        analysis Static
         set ok [analyze 1]
 
         if {$ok != 0} {
         puts "No. $step of Cyclic.Anaylsis Trying Newton .."
         algorithm Newton
+        analysis Static
         set ok [analyze 1]
         }
 
@@ -94,12 +95,14 @@ proc Analysis_Proc { Num } {
         if {$ok != 0} {
             puts "No. $step of Cyclic. Anaylsis Trying Broyden .."
             algorithm Broyden 500
+            analysis Static
             set ok [analyze 1]
         }
 
         if {$ok != 0} {
         puts "No. $step of Cyclic.Anaylsis Trying Newton .."
         algorithm Newton
+        analysis Static
         set ok [analyze 1]
         }
 

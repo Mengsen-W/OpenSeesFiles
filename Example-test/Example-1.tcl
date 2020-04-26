@@ -18,10 +18,10 @@ element truss 1 1 4 10.0 1
 element truss 2 2 4 5.0 1
 element truss 3 3 4 5.0 1
 
-recorder Node -file disp_4.out -time -node 4 -dof 1 2 disp
-recorder Node -file reaction_1.out -time -node 1 -dof 1 2 reaction
-recorder Node -file reaction_2.out -time -node 2 -dof 1 2 reaction
-recorder Node -file reaction_3.out -time -node 3 -dof 1 2 reaction
+recorder Node -file disp_4.txt -time -node 4 -dof 1 2 disp
+recorder Node -file reaction_1.txt -time -node 1 -dof 1 2 reaction
+recorder Node -file reaction_2.txt -time -node 2 -dof 1 2 reaction
+recorder Node -file reaction_3.txt -time -node 3 -dof 1 2 reaction
 
 pattern Plain 1 Linear {
     load 4 100.0 -50.0
@@ -29,9 +29,11 @@ pattern Plain 1 Linear {
 
 constraints Transformation
 numberer RCM
+system BandSPD
 test NormDispIncr 1.0e-6 6 2
 algorithm Newton
 integrator LoadControl 0.1
 analysis Static
 analyze 10
 
+wipe
