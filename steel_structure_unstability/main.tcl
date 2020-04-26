@@ -25,7 +25,15 @@ pattern Plain 1 Linear {
     load 5 0 0 1e3 0 0 0
     load 6 0 0 1e3 0 0 0
 }
-Cyclic_Function 80 1 0.1 5 3 5E-4 1000
+
+constraints Transformation
+test NormDispIncr 1.0e-6 200 2
+integrator DisplacementControl 5 3 10
+algorithm KrylovNewton
+system UmfPack
+numberer RCM
+analysis Static
+analyze 800
 ModelInfo_Proc output/modelInfo.txt
 wipe
 reset
