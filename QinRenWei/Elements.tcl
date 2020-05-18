@@ -45,7 +45,7 @@ for { set j 3 } { $j <= 5 } { incr j} {
         set TrussID [expr $j * 10000 + $i]
         set nodei [expr $i *100 + $j]
         set nodej [expr ($i + 1) * 100 + $j]
-        element truss $TrussID $nodei $nodej 628.318 4
+        element truss $TrussID $nodei $nodej 707.91 4
     }
 }
 for { set j 11 } { $j <= 13 } { incr j } {
@@ -53,7 +53,7 @@ for { set j 11 } { $j <= 13 } { incr j } {
         set TrussID [expr $j * 10000 + $i]
         set nodei [expr $i *100 + $j]
         set nodej [expr ($i + 1) * 100 + $j]
-        element truss $TrussID $nodei $nodej 628.318 4
+        element truss $TrussID $nodei $nodej 707.91 4
     }
 }
 
@@ -72,12 +72,12 @@ for { set i 1 } { $i < 26 } { incr i } {
     set TrussID [expr 2* 10000 + $i]
     set nodei [expr $i *100 + 2]
     set nodej [expr ($i + 1) * 100 + 2]
-    element truss $TrussID $nodei $nodej 628.32 5
+    element truss $TrussID $nodei $nodej 1256.64 5
 }
 
 for { set i 1} { $i < 26 } { incr i } {
     set TrussID [expr 14 * 10000 + $i]
     set nodei [expr $i *100 + 14]
     set nodej [expr ($i + 1) * 100 + 14]
-    element truss $TrussID $nodei $nodej 628.32 5
+    element truss $TrussID $nodei $nodej 1256.64 5
 }
