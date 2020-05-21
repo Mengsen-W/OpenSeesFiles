@@ -1,10 +1,7 @@
 System
-Nodes
-rigidDiaphragm
-Fixed
+nodes
+node
 material
 transformation
 element
 recorder
-loading
-analysis
