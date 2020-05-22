@@ -38,7 +38,7 @@ set Periods [open $period "w"]
 # write in file
 puts $Periods " $lambda"
 close $Periods
-# recoder in file
+# record in file
 record
 
 ModelInfo_Proc modelInfo.log

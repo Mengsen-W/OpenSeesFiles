@@ -1,0 +1,12 @@
+System
+nodes
+mass
+material
+section
+transformation
+element
+recorder
+gravity
+Gravity analysis
+history time analysis
+WARNING: analysis .. existing StaticAnalysis exists => wipeAnalysis not invoked, problems may arise
