@@ -112,7 +112,10 @@ proc Analysis_Proc { Num } {
 #FileNme：File name
 #存储单元、节点信息的文件名
 proc ModelInfo_Proc { FileName } {
-    logFile $FileName
+    if { [file exists output] == 0 } {
+        file mkdir output
+    }
+    logFile output/$FileName
     print -node
     print -ele
     getTime
