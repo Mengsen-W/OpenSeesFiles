@@ -1,0 +1,12 @@
+geomTransf Linear 1 1.000 0.000 0.000
+geomTransf Linear 2 1.000 0.000 0.000
+geomTransf Linear 3 0.000 0.000 1.000
+geomTransf Linear 4 0.000 0.000 1.000
+geomTransf Linear 5 0.000 0.000 1.000
+geomTransf Linear 6 0.000 0.000 1.000
+geomTransf Linear 7 0.000 0.000 1.000
+geomTransf Linear 8 0.000 0.000 1.000
+geomTransf Linear 9 0.000 0.000 1.000
+geomTransf Linear 10 0.000 0.000 1.000
+geomTransf Linear 11 0.000 0.000 1.000
+geomTransf Linear 12 0.000 0.000 1.000
