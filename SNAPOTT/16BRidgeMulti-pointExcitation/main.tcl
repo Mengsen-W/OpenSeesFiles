@@ -1,7 +1,7 @@
 # @Author: Mengsen.Wang
 # @Date: 2020-05-27 15:13:30
 # @Last Modified by:   Mengsen.Wang
-# @Last Modified time: 2020-05-27 15:13:30
+# @Last Modified time: 2020-05-27 15:39:46
 # @Description: Bridge in multi-point excitation
 
 reset
