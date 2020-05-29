@@ -35,7 +35,7 @@ def node_create():
 
 
 def node_fix():
-    val = [1, 1, 1, 0, 0, 0]
+    val = [1, 1, 1]
     ops.fix(1, *val)
     ops.fix(2, *val)
     ops.fix(9, *val)
