@@ -1,4 +1,4 @@
-uniaxialMaterial Steel01 1 335 200000 0.00001 
+uniaxialMaterial Steel01 1 335 200000 0.00001
 uniaxialMaterial Concrete01 2 -26.8 -0.002 -10 -0.0033
 uniaxialMaterial Elastic 3 1.999E+005
 uniaxialMaterial Elastic 201 1.489E+009
