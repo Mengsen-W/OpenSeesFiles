@@ -6,6 +6,8 @@
 
 reset
 wipe
+source Cyclic.tcl
+ModelInfo_Proc modelLog.log
 
 puts "System"
 model basic -ndm 3 -ndf 6
@@ -81,3 +83,8 @@ integrator DisplacementControl 26 2 -1.4
 analyze 100
 integrator DisplacementControl 26 2 1.2
 analyze 100
+
+ModelInfo_Proc modelInfo.log
+
+wipe
+reset

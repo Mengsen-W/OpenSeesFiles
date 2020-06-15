@@ -1,0 +1,12 @@
+System
+nodes
+mass
+fixed
+material
+ViscousDamper Model by Sarven Akcelyan and Dimitrios G. Lignos, PhD, McGill University
+section
+transformation
+element
+recorder
+rayleigh
+analysis
