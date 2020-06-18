@@ -1,0 +1,12 @@
+element	ElasticTimoshenkoBeam	1	2	1	1.00E+05	1.00E+05	1.00E+20	1.00E+20	1.00E+20	1.00E+20	3.00E+03	3.00E+03	1
+element	ElasticTimoshenkoBeam	2	3	2	1.00E+05	1.00E+05	1.00E+20	1.00E+20	1.00E+20	1.00E+20	3.00E+03	3.00E+03	2
+element	ElasticTimoshenkoBeam	3	4	3	1.00E+05	1.00E+05	1.00E+20	1.00E+20	1.00E+20	1.00E+20	3.00E+03	3.00E+03	3
+element	ElasticTimoshenkoBeam	4	5	4	1.00E+05	1.00E+05	1.00E+20	1.00E+20	1.00E+20	1.00E+20	3.00E+03	3.00E+03	4
+element	ElasticTimoshenkoBeam	5	6	5	1.00E+05	1.00E+05	1.00E+20	1.00E+20	1.00E+20	1.00E+20	3.00E+03	3.00E+03	5
+element	ElasticTimoshenkoBeam	6	7	6	1.00E+05	1.00E+05	1.00E+20	1.00E+20	1.00E+20	1.00E+20	3.00E+03	3.00E+03	6
+element	ElasticTimoshenkoBeam	7	8	7	1.00E+05	1.00E+05	1.00E+20	1.00E+20	1.00E+20	1.00E+20	3.00E+03	3.00E+03	7
+element	ElasticTimoshenkoBeam	8	9	8	1.00E+05	1.00E+05	1.00E+20	1.00E+20	1.00E+20	1.00E+20	3.00E+03	3.00E+03	8
+element	ElasticTimoshenkoBeam	9	10	9	1.00E+05	1.00E+05	1.00E+20	1.00E+20	1.00E+20	1.00E+20	3.00E+03	3.00E+03	9
+element	ElasticTimoshenkoBeam	10	11	10	1.00E+05	1.00E+05	1.00E+20	1.00E+20	1.00E+20	1.00E+20	3.00E+03	3.00E+03	10
+element	ElasticTimoshenkoBeam	11	12	11	1.00E+05	1.00E+05	1.00E+20	1.00E+20	1.00E+20	1.00E+20	3.00E+03	3.00E+03	11
+element	ElasticTimoshenkoBeam	12	13	12	1.00E+05	1.00E+05	1.00E+20	1.00E+20	1.00E+20	1.00E+20	3.00E+03	3.00E+03	12
