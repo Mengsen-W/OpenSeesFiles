@@ -7,8 +7,6 @@
 # 施加位移控加载过程
 # -----------------------------------------------------------------------------
 
-source SFI_MVLEM_gravity_analysis.tcl;
-
 puts "Model generated and gravity load applied successfully";
 
 # 设置重力荷载为常量，并重置求解域时间
@@ -21,7 +19,7 @@ set Fact $H;
 
 set Plateral 1.0; # 参考横向荷载
 pattern Plain 200 "Linear" {
-  load $IDctrlNode $Plateral 0.0 0.0 0.0
+  load $IDctrlNode $Plateral 0.0 0.0
 }
 
 set load_step 1;

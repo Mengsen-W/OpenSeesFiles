@@ -9,8 +9,8 @@
 # 设置基本输出信息
 # ------------------------------------------------------------------------------
 set model_name "SP4";
-set date_dir SFI_MVLEM_$model_name;
-file makedir $date_dir;
+set data_dir SFI_MVLEM_$model_name;
+file mkdir $data_dir;
 
 # -----------------------------------------------------------------------------
 # 创建模型空间，2维3自由度
@@ -153,4 +153,4 @@ set LunitTXT "inch";
 # 后处理部分 ---------------------------------------------------------------------
 
 # 设置记录器
-source SFI_MVLEM_recorder.tcl;
+source SFI_MVLEM_recorder.tcl
