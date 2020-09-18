@@ -113,7 +113,7 @@ proc Analysis_Proc { Num } {
 #存储单元、节点信息的文件名
 proc ModelInfo_Proc { FileName } {
     if { [file exists output] == 0 } {
-        file mkdir output
+        file mkdir log
     }
     logFile output/$FileName
 

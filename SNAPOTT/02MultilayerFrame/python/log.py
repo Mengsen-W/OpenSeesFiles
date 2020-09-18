@@ -15,7 +15,8 @@ logger.setLevel(level=logging.INFO)
 
 
 def log_init(filename="log.log", is_console=1, filedir="output"):
-    ''' Init logging\n
+    '''
+        Init logging\n
         Para: file name\n
         default: in output direction log.log
     '''
