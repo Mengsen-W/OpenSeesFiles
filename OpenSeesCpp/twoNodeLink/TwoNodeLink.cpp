@@ -2,7 +2,7 @@
  * @Author: Mengsen.Wang
  * @Date: 2020-07-22 11:37:08
  * @Last Modified by: Mengsen.Wang
- * @Last Modified time: 2020-07-22 12:16:10
+ * @Last Modified time: 2020-08-11 12:03:01
  */
 
 // Written: Andreas Schellenberg (andreas.schellenberg@gmail.com)
@@ -70,6 +70,7 @@ void *OPS_TwoNodeLink() {
   // get material vector
   std::vector<UniaxialMaterial *> mats;
   while (OPS_GetNumRemainingInputArgs() > 0) {
+    // every time push one material to mats
     int mattag;
     numdata = 1;
     // get material tag reminder
@@ -107,7 +108,7 @@ void *OPS_TwoNodeLink() {
     opserr << "WARNING invalid direction ID\n";
     return 0;
   }
-  // FIXME maybe dirs from 0 to 5, hovever input from 1 to 6
+  // README: maybe dirs from 0 to 5, hovever input from 1 to 6
   for (int i = 0; i < numdata; i++) dirs(i)--;
 
   // options
@@ -1386,6 +1387,7 @@ void TwoNodeLink::setUp() {
                << "no local y vector specified\n";
     }
   } else {
+    // zero-element
     if (x.Size() == 0) {
       x.resize(3);
       x(0) = 1.0;
