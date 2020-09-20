@@ -10,26 +10,17 @@ import os
 import logging
 import openseespy.opensees as ops
 
-global logger = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
 
 
-def file_create():
-    # for get whole routine output
-    pass
-
-
-def write():
-    # for some write
-    pass
-
-
-def log_init(is_console=True, filedir="output", filename="default.log"):
+def _file_create(filedir: str, filename: str):
     '''
-    Brief: init logger\n
-    Param: is_console = true whether or not print to console\n
+    Brief: create file name\n
     Param: filedir = "output" output dir for this pwd\n
     Param: filename = "default.log" out put log file name\n
+    return: whole filepath
     '''
+
     path = os.getcwd()
 
     is_exists = os.path.exists(path+"\\"+filedir)
@@ -37,6 +28,35 @@ def log_init(is_console=True, filedir="output", filename="default.log"):
         os.mkdir(path+"\\"+filedir)
 
     filepath = path+"\\"+filedir+"\\"+filename
+
+    return filepath
+
+
+def write_flag(filepath: str, flag: str):
+    '''
+    Brief: write some str before the log\n
+    Param: filepath out put log file name\n
+    Param: flag = "" before the log write
+    '''
+    fd = os.open(filepath, os.O_RDWR | os.O_CREAT)
+    os.write(fd, flag.encode())
+    os.close(fd)
+    pass
+
+
+def log_init(is_console: bool = True, filedir: str = "output", filename: str = "default.log", flag: str = ""):
+    '''
+    Brief: init logger\n
+    Param: is_console = true whether or not print to console\n
+    Param: filedir = "output" output dir for this pwd\n
+    Param: filename = "default.log" out put log file name\n
+    Param: flag = "" before the log write
+    '''
+
+    filepath = _file_create(filedir, filename)
+
+    if len(flag) != 0:
+        write_flag(filepath, flag)
 
     logger.setLevel(level=logging.INFO)
     handler = logging.FileHandler(filepath)
@@ -62,15 +82,13 @@ def model_info(is_console=True, filename="Info.log", filedir="output"):
     Param: filename = "Info.log" out put log file name\n
     Param: filedir = "output" output dir for this pwd\n
     '''
-    path = os.getcwd()
 
-    is_exists = os.path.exists(path+"\\"+filedir)
-    if not is_exists:
-        os.mkdir(path+"\\"+filedir)
+    filepath = _file_create(filedir, filename)
 
-    filepath = path+"\\"+filedir+"\\"+filename
+    print(filepath)
+
     if not is_console:
-        ops.logFile(filepath, '-append', '-noEcho')
+        ops.logFile(filepath, '-noEcho')
     else:
-        ops.logFile(filepath, '-append', '-noEcho')
+        ops.logFile(filepath)
     # ops.printModel()

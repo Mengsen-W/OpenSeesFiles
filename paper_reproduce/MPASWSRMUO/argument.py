@@ -27,11 +27,9 @@ Description: shear wall geometric parameters
 
 from log import *
 
-log_init(True, "paper_reproduce/MPASWSRMUO/output/", "testLog.log")
-
-ASCII_model: str = "\n\
+ASCII_model: str = "\
 Written by MengsenWang SZU Chinan\n\
-mengsen_wang@163.com\n\
+mengsen_wang@163.com\n\n\
                  Use SI\n\
                  Node Tag                height\n\
  1011 2011 3011 4011 5011 6011 7011 8011 3.2\n\
@@ -46,11 +44,14 @@ mengsen_wang@163.com\n\
  1002 2002 3002 4002 5002 6002 7002 8002 0.32\n\
  1001 2001 3001 4001 5001 6001 7001 8001 0.00\n\
  /|\  /|\  /|\  /|\  /|\  /|\  /|\  /|\  full fixed\n\
- 0.0 0.16 0.32 0.64 0.96 1.28 1.44 1.60  length\n\
+ 0.0 0.16 0.32 0.64 0.96 1.28 1.44 1.60  length\n\n\
 "
+log_init(True, "paper_reproduce/MPASWSRMUO/output/",
+         "testLog.log", ASCII_model)
+model_info(True, filename="Info.log",
+           filedir="paper_reproduce/MPASWSRMUO/output/")
 
-logger.info(ASCII_model)
-
+print(ASCII_model)
 
 length: float = 1.6
 width: float = 0.2
