@@ -1,8 +1,10 @@
-import openseespy.opensees as ops
-import openseespy.postprocessing.Get_Rendering as opsplt
+"""
+Author: Mengsen.Wang
+Date: 2020-09-20 10:16:22
+Last Modified by: Mengsen.Wang
+Last Modified time: 2020-09-20 10:16:22
+Description： management all of process
+"""
 
-
-ops.wipe();
-ops.model('basic', '-ndm', 2, '-ndf', 3)
-opsplt.plot_model()
-
+import log
+import perprocessing

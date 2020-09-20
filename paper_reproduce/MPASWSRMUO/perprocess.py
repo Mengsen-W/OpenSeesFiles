@@ -1,14 +1,12 @@
 """
-@Author: Mengsen.Wang
-@Date: 2020-09-19 10:53:01
-@Last Modified by:   Mengsen.Wang
-@Last Modified time: 2020-09-19 10:53:01
-@Description: perprocessing
+Author: Mengsen.Wang
+Date: 2020-09-19 10:53:01
+Last Modified by: Mengsen.Wang
+Last Modified time: 2020-09-19 10:53:01
+Description: perprocess part
 """
 
-import openseespy.opensees as ops
 import argument as argu
-import log
 
 # set model
 ops.model('basic', '-ndm', argu.ndm, '-ndf', argu.ndf)
@@ -31,4 +29,5 @@ for i in range(1, 7):
 
 if __name__ == "__main__":
     # pass
+    # for debug
     ops.printModel()

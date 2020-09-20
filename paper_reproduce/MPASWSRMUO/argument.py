@@ -1,14 +1,14 @@
 """
-@Author: Mengsen.Wang
-@Date: 2020-09-19 10: 36: 37
-@Last Modified by:   Mengsen.Wang
-@Last Modified time: 2020-09-19 10: 36: 37
-@Description: shear wall geometric parameters
+Author: Mengsen.Wang
+Date: 2020-09-19 10: 36: 37
+Last Modified by:   Mengsen.Wang
+Last Modified time: 2020-09-19 10: 36: 37
+Description: shear wall geometric parameters
 """
+# Written by MengsenWang SZU China
+# mengsen_wang@163.com
 
-"""
-use SI
-"""
+#                 Use SI
 #                 Node Tag                height
 # 1011 2011 3011 4011 5011 6011 7011 8011 3.2
 # 1010 2010 3010 4010 5010 6010 7010 8010 2.88
@@ -23,6 +23,34 @@ use SI
 # 1001 2001 3001 4001 5001 6001 7001 8001 0.00
 # /|\  /|\  /|\  /|\  /|\  /|\  /|\  /|\  full fixed
 # 0.0 0.16 0.32 0.64 0.96 1.28 1.44 1.60  length
+
+
+from log import *
+
+log_init(True, "paper_reproduce/MPASWSRMUO/output/", "testLog.log")
+
+ASCII_model: str = "\n\
+Written by MengsenWang SZU Chinan\n\
+mengsen_wang@163.com\n\
+                 Use SI\n\
+                 Node Tag                height\n\
+ 1011 2011 3011 4011 5011 6011 7011 8011 3.2\n\
+ 1010 2010 3010 4010 5010 6010 7010 8010 2.88\n\
+ 1009 2009 3009 4009 5009 6009 7009 8009 2.56\n\
+ 1008 2008 3008 4008 5008 6008 7008 8008 2.24\n\
+ 1007 2007 3007 4007 5007 6007 7007 8007 1.92\n\
+ 1006 2006 3006 4006 5006 6006 7006 8006 1.60\n\
+ 1005 2005 3005 4005 5005 6005 7005 8005 1.28\n\
+ 1004 2004 3004 4004 5004 6004 7004 8004 0.96\n\
+ 1003 2003 3003 4003 5003 6003 7003 8003 0.64\n\
+ 1002 2002 3002 4002 5002 6002 7002 8002 0.32\n\
+ 1001 2001 3001 4001 5001 6001 7001 8001 0.00\n\
+ /|\  /|\  /|\  /|\  /|\  /|\  /|\  /|\  full fixed\n\
+ 0.0 0.16 0.32 0.64 0.96 1.28 1.44 1.60  length\n\
+"
+
+logger.info(ASCII_model)
+
 
 length: float = 1.6
 width: float = 0.2
