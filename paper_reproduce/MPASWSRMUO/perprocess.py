@@ -28,34 +28,61 @@ for i in range(1, 8):
 logger.info("fixed node")
 
 # rigid beam
+logger.info("rigidness beam on the top")
 for i in range(1, 7):
     ops.rigidLink('beam', i * argu.node_index + 11,
                   (i + 1) * argu.node_index + 11)
-logger.info("rigidness beam on the top")
 
-# set metrial
-logger.info(
-    "material tag = 1 by [concrete 01] and used on protective concrete")
-ops.uniaxialMaterial('Concrete01', 1, argu.mat1.fpc,
-                     argu.mat1.epsc0, argu.mat1.fpcu, argu.mat1.epsU)
-logger.info("material tag = 2 by [concreteCM] and used on constraint concrete")
-ops.uniaxialMaterial('ConcreteCM', 2, -argu.mat2.fpcc, argu.mat2.epcc, argu.mat2.Ec,
-                     argu.mat2.rc, argu.mat2.xcrn, argu.mat2.ft, argu.mat2.et, argu.mat2.rt, argu.mat2.Gap)
-logger.info(
-    "material tag = 3 by [concrete 02] and used on non-constraint concrete")
-ops.uniaxialMaterial('Concrete02', 3, argu.mat3.fpcu, argu.mat3.epsc0,
-                     argu.mat3.fpcc, argu.mat3.epsU, argu.mat3.lam, argu.mat3.ft, argu.mat3.Ets)
-logger.info("material tag 4 by [steel 02] and used on center shell")
-ops.uniaxialMaterial('Steel02', 4, argu.mat4.Fy,
-                     argu.mat4.E0, argu.mat4.b, *(argu.mat4.params))
+# set uniaxial metrial
+logger.info("material tag 1 by [steel 02] and used on longitudinal steel")
+ops.uniaxialMaterial('Steel02', 1, *(argu.longitudinal_steel))
 
-logger.info("material setted")
+logger.info("material tag 2 by [steel 02] and used on transverse steel")
+ops.uniaxialMaterial('Steel02', 2, *(argu.transverse_steel))
 
 # set nDMaterial
 logger.info(
-    "material tag 5 by [PlaneStressUserMaterial] and used on center shell protective")
-ops.nDMaterial('PlaneStressUserMaterial', 5, 40, 7, *(argu.cen_pro_con))
-ops.nDMaterial('PlaneStressUserMaterial', 6, 40, 7, *(argu.cen_int_con))
+    "material tag 30 by [PlaneStressUserMaterial] and used on C30 concrete")
+ops.nDMaterial('PlaneStressUserMaterial', 3, *(argu.c30_con[0:-1]))
+logger.info(
+    "material tag 30 by [PlateFromPlaneStress] and used on C30 concrete")
+ops.nDMaterial('PlateFromPlaneStress', 30, 3, argu.c30_con[-1])
+
+logger.info(
+    "material tag 40 by [PlaneStressUserMaterial] and used on C40 concrete")
+ops.nDMaterial('PlaneStressUserMaterial', 4, *(argu.c40_con[0:-1]))
+
+logger.info(
+    "material tag 40 by [PlateFromPlaneStress] and used on C40 concrete")
+ops.nDMaterial('PlateFromPlaneStress', 40, 4, argu.c40_con[-1])
+
+logger.info(
+    "material tag 5 by [PlateRebar] and used on angle 90 d = 10 longitudinal steel")
+ops.nDMaterial('PlateRebar', 5, 1, 90)
+
+logger.info(
+    "material tag 6 by [PlateRebar] and used angle 90 d = 6 transverse steel")
+ops.nDMaterial('PlateRebar', 6, 2, 90)
+
+logger.info(
+    "material tag 7 by [PlateRebar] and used angle 0 d = 6 transverse steel")
+ops.nDMaterial('PlateRebar', 7, 2, 0)
+
+logger.info("material setted")
+
+# set section
+confined_region: float = [30, 15.0, 7, 0.2749, 7, 0.5886, 30, 42.059,
+                          30, 42.059, 30, 42.059, 30, 42.059, 7, 0.5886, 7, 0.2949, 30, 15.0]
+middle_region: float = [30, 15.0, 7, 0.2949, 6, 0.5886,
+                        30, 84.117, 30, 84.117, 6, 0.5886, 7, 0.2949, 30, 15.0]
+
+ops.section('LayeredShell', 1, 10, *confined_region)
+logger.info("confined_region setted")
+
+ops.section('LayeredShell', 2, 8, *middle_region)
+logger.info("middle_region setted")
+
+# set element
 
 if __name__ == "__main__":
     # pass

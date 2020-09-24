@@ -25,7 +25,7 @@ Description: shear wall geometric parameters
 # 0.0 0.16 0.32 0.64 0.96 1.28 1.44 1.60  length
 
 
-from log import *
+from log import logger, log_ini
 
 ASCII_model: str = "\
 Written by MengsenWang SZU Chinan\n\
@@ -44,14 +44,37 @@ mengsen_wang@163.com\n\n\
  1002 2002 3002 4002 5002 6002 7002 8002 0.32\n\
  1001 2001 3001 4001 5001 6001 7001 8001 0.00\n\
  /|\  /|\  /|\  /|\  /|\  /|\  /|\  /|\  full fixed\n\
- 0.0 0.16 0.32 0.64 0.96 1.28 1.44 1.60  length\n\n\
+ 0.0 0.16 0.32 0.64 0.96 1.28 1.44 1.60  length\n\
+\n\n\
+confined region\n\
+material    absolute thickness(mm)   angle(steel)    material tag\n\
+cover               15.0                              30\n\
+d=6transverse     0.2949                0              7\n\
+d=6transverse     0.5886                0              7\n\
+core              42.059                              30\n\
+core              42.059                              30\n\
+core              42.059                              30\n\
+core              42.059                              30\n\
+d=6transverse     0.5886                0              7\n\
+d=6transverse     0.2949                0              7\\
+cover               15.0                              30\n\
+\n\n\
+middle region\n\
+material    absolute thickness(mm)   angle(steel)    material tag\n\
+cover               15.0                               30\n\
+d=6transverse     0.2949                0               7\n\
+d=6longitudinal   0.5886               90               6\n\
+core              84.117                               30\n\
+core              84.117                               30\n\
+d=6longitudinal   0.5886               90               6\n\
+d=6transverse     0.2949                0               7\n\
+cover               15.0                               30\n\
+\n\n\
 "
-log_init(True, "paper_reproduce/MPASWSRMUO/output/",
-         "testLog.log", ASCII_model)
-model_info(True, filename="Info.log",
-           filedir="paper_reproduce/MPASWSRMUO/output/")
-
 print(ASCII_model)
+log_init(True, "output\\",
+         "testLog.log", ASCII_model)
+
 
 length: float = 1.6
 width: float = 0.2
@@ -81,49 +104,14 @@ center_div: float = [(constraint_left_end + ((constraint_right_begin - constrain
 length_div: float = constraint_div_left + center_div + constraint_div_right
 
 
-class mat1:
-    # for protective concrete
-    fpc: float = -30e6
-    epsc0: float = -0.00233739
-    fpcu: float = 19e6
-    epsU: float = 0.006
+longitudinal_steel: float = [379e6, 202.7e9, 0.01, 18.5, 0.925, 0.15]
 
+transverse_steel: float = [392e6, 200.6e9, 0.01, 18.5, 0.925, 0.15]
 
-class mat2:
-    # for constraint concrete
-    fpcc: float = -38.6e6
-    epcc: float = -0.006
-    Ec: float = 6433333333.33
-    rc: float = 7
-    xcrn: float = 1.035
-    ft: float = 0.30
-    et: float = 0.00008
-    rt: float = 1.2
-    xcrp: float = 10000
-    Gap: float = 0.0
-
-
-class mat3:
-    # for non-constraint concrete
-    fpcu: float = -30e6
-    epsc0: float = -0.00233739
-    fpcc: float = 19e6
-    epsU: float = 0.006
-    lam: float = 0.46
-    ft: float = 0.30
-    Ets: float = 1069569049.2386807507519070416148
-
-
-class mat4:
-    Fy: float = 58.4103e6
-    E0: float = 2900000000
-    b: float = 0.002
-    params: float = [10, 0.925, 0.15]
-
-
-cen_pro_con: float = [20.7e6, 2.07e6, -4.14e6, -0.002, -0.005, 0.001, 0.08]
-cen_int_con: float = [30.8e6, 3.08e6, -6.16e6, -0.002, -0.005, 0.001, 0.05]
-
+c30_con: float = [40, 7, 20.7e6, 2.07e6, -
+                  4.14e6, -0.002, -0.005, 0.001, 0.08, 1.25e10]
+c40_con: float = [40, 7, 30.8e6, 3.08e6, -
+                  6.16e6, -0.002, -0.005, 0.001, 0.05, 1.283e10]
 
 if __name__ == "__main__":
     print(hight_div)

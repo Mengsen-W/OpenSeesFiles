@@ -7,10 +7,24 @@ Description: set log
 """
 
 import os
+import shutil
 import logging
 import openseespy.opensees as ops
 
 logger = logging.getLogger(__name__)
+
+
+def check_path(filedir: str):
+    '''
+    @Brief: check output dirpath is exists, maybe in debug period will used\n
+    @Param: filedir
+    '''
+    path = os.getcwd()
+
+    is_exists = os.path.exists(path+"\\"+filedir)
+
+    if is_exists:
+        shutil.rmtree(path+"\\"+filedir)
 
 
 def _file_create(filedir: str, filename: str):
@@ -24,6 +38,7 @@ def _file_create(filedir: str, filename: str):
     path = os.getcwd()
 
     is_exists = os.path.exists(path+"\\"+filedir)
+
     if not is_exists:
         os.mkdir(path+"\\"+filedir)
 
@@ -52,6 +67,7 @@ def log_init(is_console: bool = True, filedir: str = "output", filename: str = "
     Param: filename = "default.log" out put log file name\n
     Param: flag = "" before the log write
     '''
+    check_path(filedir)
 
     filepath = _file_create(filedir, filename)
 
@@ -74,18 +90,16 @@ def log_init(is_console: bool = True, filedir: str = "output", filename: str = "
         console.setFormatter(formatter)
         logger.addHandler(console)
 
+    log_path = filedir + "\\" + "model_log"
+    model_log(is_console, log_path)
 
-def model_info(is_console=True, filename="Info.log", filedir="output"):
+
+def model_log(is_console: bool, filepath: str):
     '''
     Brief: init model info output\n
     Param: is_console = true whether or not print to console\n
-    Param: filename = "Info.log" out put log file name\n
-    Param: filedir = "output" output dir for this pwd\n
+    Param: filepath  out put log file path
     '''
-
-    filepath = _file_create(filedir, filename)
-
-    print(filepath)
 
     if not is_console:
         ops.logFile(filepath, '-noEcho')
