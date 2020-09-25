@@ -69,7 +69,9 @@ def log_init(is_console: bool = True, filedir: str = "output", filename: str = "
     '''
     check_path(filedir)
 
-    filepath = _file_create(filedir, filename)
+    log_filename = filename + ".log"
+
+    filepath = _file_create(filedir, log_filename)
 
     if len(flag) != 0:
         write_flag(filepath, flag)
@@ -90,8 +92,8 @@ def log_init(is_console: bool = True, filedir: str = "output", filename: str = "
         console.setFormatter(formatter)
         logger.addHandler(console)
 
-    log_path = filedir + "\\" + "model_log"
-    model_log(is_console, log_path)
+    model_log_path = filedir + "\\" + filename + "_model_info.log"
+    model_log(is_console, model_log_path)
 
 
 def model_log(is_console: bool, filepath: str):

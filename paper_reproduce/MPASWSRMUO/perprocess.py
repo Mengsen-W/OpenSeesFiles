@@ -8,7 +8,7 @@ Description: perprocess part
 
 import argument as argu
 import openseespy.opensees as ops
-from log import logger
+from liblog import logger
 from libCycliAnalysis import CyclicDisplace
 
 ops.reset()
@@ -31,11 +31,11 @@ for i in range(1, 8):
     ops.fix(i * argu.node_index + 1, *full_fixed)
 logger.info("fixed node")
 
-# rigid beam
-logger.info("rigidness beam on the top")
-for i in range(1, 7):
-    ops.rigidLink('beam', i * argu.node_index + 11,
-                  (i + 1) * argu.node_index + 11)
+# # rigid beam
+# logger.info("rigidness beam on the top")
+# for i in range(1, 7):
+#     ops.rigidLink('beam', i * argu.node_index + 11,
+#                   (i + 1) * argu.node_index + 11)
 
 # set uniaxial metrial
 logger.info("material tag 1 by [steel 02] and used on longitudinal steel")
@@ -73,7 +73,6 @@ logger.info(
 ops.nDMaterial('PlateRebar', 7, 2, 0)
 
 logger.info("material setted")
-# logger.info(ops.p)
 
 # set section
 confined_region_1: float = [30, 15.0, 7, 0.2749, 7, 0.5886, 30, 42.059,
@@ -125,35 +124,44 @@ logger.info("[Linear] timeSeries tag 1 created")
 
 # set load pattern
 ops.pattern('Plain', 1, 1)
-load: float = 164333.34
-for i in range(2, 8):
-    ops.load(i * 1000 + 11, 0, load, 0, 0, 0, 0)
+load: float = 123250
+for i in range(1, 9):
+    ops.load(i * 1000 + 10, 0, load, 0, 0, 0, 0)
 
 logger.info("Node Load created")
 
+# set recorder
+ops.recorder('Node', '-file', 'output\\1011_load.out', '-node', 1011,
+             '-dof', 1, 2, 3, 'disp', 'vel', 'accel', 'incrDisp', 'reaction')
+logger.info("recoder created")
+
 # load analyze
 ops.constraints('Plain')
+logger.info("constraints [Plain] in load")
+ops.numberer('Plain')
+logger.info("number [Plain] in load")
 ops.system('BandGen')
+logger.info("system [BandGen] in load")
 ops.test('NormDispIncr', 1.0e-6, 200)
-ops.algorithm('BFGS', secant=False, initial=False, count=100)
+logger.info("test [NormDispIncr] in load")
+ops.algorithm('BFGS')
+logger.info("algorithm [BFGS] in load")
 ops.integrator('LoadControl', 0.1)
+logger.info("integrator [LoadControl 0.1] in load")
 ops.analysis('Static')
-ops.analyze(10)
-
-# set recorder
-ops.recorder('Node', '-file', 'output\\1011_load.out', '-precision', '-timeSeries', 1, '-time', '-node', 1011,
-             '-dof', 1, 2, 3, 'disp', 'vel', 'accel', 'incrDisp', 'reaction')
-
-logger.info("load analyze completed")
+logger.info("analysis [Static] in load")
+ok = ops.analyze(10)
+logger.info("analyze analyze complete was %s", ok == 0)
 
 ops.loadConst('-time', 0)
+ops.wipeAnalysis()
 
 # set hysteresis
 ops.pattern('Plain', 2, 1)
 ops.load(1011, 0, 1, 0, 0, 0, 0)
-ops.recorder('Node', '-file', 'output\\1011_cyc.out', '-precision', '-node', 1011,
+ops.recorder('Node', '-file', 'output\\1011_cyc.out', '-node', 1011,
              '-dof', 1, 2, 3, 'disp', 'vel', 'accel', 'incrDisp', 'reaction')
-CyclicDisplace(1, 80, 0.5, 1011, 1, 1E-2, 1000)
+CyclicDisplace(0.5, 80, 0.2, 1011, 1, 1E-2, 1000)
 
 
 if __name__ == "__main__":

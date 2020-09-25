@@ -7,7 +7,7 @@ Description： management all of process
 """
 
 import openseespy.opensees as ops
-from log import logger
+from liblog import logger
 
 
 def CyclicDisplace(Ddelta: float, Dnum: int, Dincr: float, Node: float, dof: float, tol: float, iter: float):
@@ -35,16 +35,17 @@ def CyclicDisplace(Ddelta: float, Dnum: int, Dincr: float, Node: float, dof: flo
     ops.numberer('RCM')
     ops.system('UmfPack')
     ops.test('NormDispIncr', tol, iter, 0, 2)
-    ops.analysis('Static')
     for ii in range(1, Dnum + 1):
         u = Ddelta * ii
         negdel = Dincr * -1
         logger.info("%d Cyclic of Displacement, Plus of Displacement...", ii)
         ops.integrator('DisplacementControl', Node, dof, Dincr)
         Analysis_Proc(int(u / Dincr))
+
         logger.info("%d Cyclic of Displacement, Minus of Displacement...", ii)
         ops.integrator('DisplacementControl', Node, dof, negdel)
         Analysis_Proc(int(2 * u / Dincr))
+
         logger.info("%d Cyclic of Displacement, Back to Zero...", ii)
         ops.integrator('DisplacementControl', Node, dof, Dincr)
         Analysis_Proc(int(u / Dincr))
@@ -59,45 +60,53 @@ def Analysis_Proc(Num: int):
     '''
     for step in range(1, Num + 1):
         logger.info("No. %d of Cyclic. Anaylsis KrylovNewton..", step)
-        ops.algorithm('KrylovNewton',  maxDim=10)
+        ops.algorithm('KrylovNewton')
+        ops.analysis('Static')
         ok = ops.analyze(1)
 
         if ok != 0:
             logger.info("No. %d of Cyclic.Anaylsis Trying Newton ..", step)
             ops.algorithm('Newton')
+            ops.analysis('Static')
             ok = ops.analyze(1)
 
         if ok != 0:
             logger.info(
                 "NO. %d of Cyclic.Anaylsis Trying SecantNewton ..", step)
             ops.algorithm('SecantNewton')
+            ops.analysis('Static')
             ok = ops.analyze(1)
 
         if ok != 0:
             logger.info(
                 "No. %d of Cyclic.Anaylsis Trying ModifiedNewton ..", step)
             ops.algorithm('ModifiedNewton')
+            ops.analysis('Static')
             ok = ops.analyze(1)
 
         if ok != 0:
             logger.info(
                 "NO. %d of Cyclic. Anaylsis Trying NewtonWithLineSearch ..", step)
             ops.algorithm('NewtonLineSearch')
+            ops.analysis('Static')
             ok = ops.analyze(1)
 
         if ok != 0:
             logger.info("No. %d of Cyclic.Anaylsis Trying Newton ..", step)
             ops.algorithm('Newton')
+            ops.analysis('Static')
             ok = ops.analyze(1)
 
         if ok != 0:
             logger.info("No. %d of Cyclic.Anaylsis Trying BFGS ..", step)
             ops.algorithm('BFGS')
+            ops.analysis('Static')
             ok = ops.analyze(1)
 
         if ok != 0:
             logger.info("No. %d of Cyclic. Anaylsis Trying Broyden ..", step)
             ops.algorithm('Broyden', count=500)
+            ops.analysis('Static')
             ok = ops.analyze(1)
 
         if ok != 0:

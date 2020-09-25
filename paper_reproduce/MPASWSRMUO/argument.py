@@ -25,7 +25,8 @@ Description: shear wall geometric parameters
 # 0.0 0.16 0.32 0.64 0.96 1.28 1.44 1.60  length
 
 
-from log import logger, log_init
+from liblog import logger, log_init
+import time
 
 ASCII_model: str = "\
 Written by MengsenWang SZU Chinan\n\
@@ -72,8 +73,9 @@ cover               15.0                               30\n\
 \n\n\
 "
 print(ASCII_model)
+time = time.strftime("%Y-%m-%d-%H-%M-%S", time.localtime())
 log_init(True, "output\\",
-         "testLog.log", ASCII_model)
+         time, ASCII_model)
 
 
 length: float = 1.6
