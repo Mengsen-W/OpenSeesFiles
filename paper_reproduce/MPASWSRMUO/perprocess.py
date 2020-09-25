@@ -9,6 +9,10 @@ Description: perprocess part
 import argument as argu
 import openseespy.opensees as ops
 from log import logger
+from libCycliAnalysis import CyclicDisplace
+
+ops.reset()
+ops.wipe()
 
 # set model
 ops.model('basic', '-ndm', argu.ndm, '-ndf', argu.ndf)
@@ -69,22 +73,90 @@ logger.info(
 ops.nDMaterial('PlateRebar', 7, 2, 0)
 
 logger.info("material setted")
+# logger.info(ops.p)
 
 # set section
-confined_region: float = [30, 15.0, 7, 0.2749, 7, 0.5886, 30, 42.059,
-                          30, 42.059, 30, 42.059, 30, 42.059, 7, 0.5886, 7, 0.2949, 30, 15.0]
-middle_region: float = [30, 15.0, 7, 0.2949, 6, 0.5886,
-                        30, 84.117, 30, 84.117, 6, 0.5886, 7, 0.2949, 30, 15.0]
+confined_region_1: float = [30, 15.0, 7, 0.2749, 7, 0.5886, 30, 42.059,
+                            30, 42.059, 30, 42.059, 30, 42.059, 7, 0.5886, 7, 0.2949, 30, 15.0]
+middle_region_1: float = [30, 15.0, 7, 0.2949, 6, 0.5886,
+                          30, 84.117, 30, 84.117, 6, 0.5886, 7, 0.2949, 30, 15.0]
 
-ops.section('LayeredShell', 1, 10, *confined_region)
+ops.section('LayeredShell', 11, 10, *confined_region_1)
 logger.info("confined_region setted")
 
-ops.section('LayeredShell', 2, 8, *middle_region)
+ops.section('LayeredShell', 12, 8, *middle_region_1)
+logger.info("middle_region setted")
+
+confined_region_2: float = [40, 15.0, 7, 0.2749, 7, 0.5886, 40, 42.059,
+                            40, 42.059, 40, 42.059, 40, 42.059, 7, 0.5886, 7, 0.2949, 40, 15.0]
+middle_region_2: float = [40, 15.0, 7, 0.2949, 6, 0.5886,
+                          40, 84.117, 40, 84.117, 6, 0.5886, 7, 0.2949, 40, 15.0]
+
+ops.section('LayeredShell', 21, 10, *confined_region_2)
+logger.info("confined_region setted")
+
+ops.section('LayeredShell', 22, 8, *middle_region_2)
 logger.info("middle_region setted")
 
 # set element
+for i in range(1, 3):
+    for j in range(1, 11):
+        ops.element('ShellMITC4', i * 1000 + j, i * 1000 + j,
+                    (i + 1) * 1000 + j,  (i + 1)*1000 + (j + 1), i*1000 + (j + 1), 11)
+        ops.element('ShellMITC4', (i + 5) * 1000 + j, (i + 5) * 1000 + j,
+                    (i + 6) * 1000 + j,  (i + 6)*1000 + (j + 1), (i + 5)*1000 + (j + 1), 11)
+
+
+for i in range(3, 6):
+    for j in range(1, 11):
+        ops.element('ShellMITC4', i * 1000 + j, i * 1000 + j,
+                    (i+1) * 1000 + j,  (i+1)*1000 + (j+1), i*1000 + (j+1), 12)
+        ops.element('Truss', (i - 2) * 100 + j, (i - 2) * 1000 +
+                    j, (i - 2) * 1000 + (j + 1), 223.53e-6, 1)
+        ops.element('Truss', (i + 3) * 100 + j, (i + 3) * 1000 +
+                    j, (i + 3) * 1000 + (j + 1), 223.53e-6, 1)
+
+logger.info("element created")
+
+# set timeSeries
+ops.timeSeries('Linear', 1)
+logger.info("[Linear] timeSeries tag 1 created")
+
+
+# set load pattern
+ops.pattern('Plain', 1, 1)
+load: float = 164333.34
+for i in range(2, 8):
+    ops.load(i * 1000 + 11, 0, load, 0, 0, 0, 0)
+
+logger.info("Node Load created")
+
+# load analyze
+ops.constraints('Plain')
+ops.system('BandGen')
+ops.test('NormDispIncr', 1.0e-6, 200)
+ops.algorithm('BFGS', secant=False, initial=False, count=100)
+ops.integrator('LoadControl', 0.1)
+ops.analysis('Static')
+ops.analyze(10)
+
+# set recorder
+ops.recorder('Node', '-file', 'output\\1011_load.out', '-precision', '-timeSeries', 1, '-time', '-node', 1011,
+             '-dof', 1, 2, 3, 'disp', 'vel', 'accel', 'incrDisp', 'reaction')
+
+logger.info("load analyze completed")
+
+ops.loadConst('-time', 0)
+
+# set hysteresis
+ops.pattern('Plain', 2, 1)
+ops.load(1011, 0, 1, 0, 0, 0, 0)
+ops.recorder('Node', '-file', 'output\\1011_cyc.out', '-precision', '-node', 1011,
+             '-dof', 1, 2, 3, 'disp', 'vel', 'accel', 'incrDisp', 'reaction')
+CyclicDisplace(1, 80, 0.5, 1011, 1, 1E-2, 1000)
+
 
 if __name__ == "__main__":
-    # pass
     # for debug
     ops.printModel()
+    # pass

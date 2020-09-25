@@ -25,7 +25,7 @@ Description: shear wall geometric parameters
 # 0.0 0.16 0.32 0.64 0.96 1.28 1.44 1.60  length
 
 
-from log import logger, log_ini
+from log import logger, log_init
 
 ASCII_model: str = "\
 Written by MengsenWang SZU Chinan\n\
@@ -56,7 +56,7 @@ core              42.059                              30\n\
 core              42.059                              30\n\
 core              42.059                              30\n\
 d=6transverse     0.5886                0              7\n\
-d=6transverse     0.2949                0              7\\
+d=6transverse     0.2949                0              7\n\
 cover               15.0                              30\n\
 \n\n\
 middle region\n\
