@@ -69,7 +69,7 @@ def log_init(is_console: bool = True, filedir: str = "output", filename: str = "
     '''
     check_path(filedir)
 
-    log_filename = filename + ".log"
+    log_filename = filename + "_user.log"
 
     filepath = _file_create(filedir, log_filename)
 
@@ -92,7 +92,7 @@ def log_init(is_console: bool = True, filedir: str = "output", filename: str = "
         console.setFormatter(formatter)
         logger.addHandler(console)
 
-    model_log_path = filedir + "\\" + filename + "_model_info.log"
+    model_log_path = filedir + "\\" + filename + "_model.log"
     model_log(is_console, model_log_path)
 
 

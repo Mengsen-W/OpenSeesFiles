@@ -6,6 +6,9 @@ Last Modified time: 2020-09-19 10:53:01
 Description: perprocess part
 """
 
+import matplotlib.pyplot as plt
+import openseespy.postprocessing.ops_vis as opsv
+import openseespy.postprocessing.Get_Rendering as opsplt
 import argument as argu
 import openseespy.opensees as ops
 from liblog import logger
@@ -130,8 +133,10 @@ for i in range(1, 9):
 
 logger.info("Node Load created")
 
+opsplt.createODB("ShearWall", 'LoadCaseName')
+
 # set recorder
-ops.recorder('Node', '-file', 'output\\1011_load.out', '-node', 1011,
+ops.recorder('Node', '-file', 'output\\1011_load.out', '-node', 1011, '-time',
              '-dof', 1, 2, 3, 'disp', 'vel', 'accel', 'incrDisp', 'reaction')
 logger.info("recoder created")
 
@@ -156,15 +161,17 @@ logger.info("analyze analyze complete was %s", ok == 0)
 ops.loadConst('-time', 0)
 ops.wipeAnalysis()
 
+
 # set hysteresis
 ops.pattern('Plain', 2, 1)
 ops.load(1011, 0, 1, 0, 0, 0, 0)
-ops.recorder('Node', '-file', 'output\\1011_cyc.out', '-node', 1011,
+ops.recorder('Node', '-file', 'output\\1011_cyc.out', '-node', 1011, '-time',
              '-dof', 1, 2, 3, 'disp', 'vel', 'accel', 'incrDisp', 'reaction')
-CyclicDisplace(0.5, 80, 0.2, 1011, 1, 1E-2, 1000)
+CyclicDisplace(1, 80, 1, 1011, 2, 1E-2, 1000)
 
 
 if __name__ == "__main__":
     # for debug
     ops.printModel()
+    opsplt.plot_model('nodes', 'elements', Model='ShearWall')
     # pass
