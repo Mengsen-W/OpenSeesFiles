@@ -129,15 +129,17 @@ logger.info("[Linear] timeSeries tag 1 created")
 ops.pattern('Plain', 1, 1)
 load: float = 123250
 for i in range(1, 9):
-    ops.load(i * 1000 + 10, 0, load, 0, 0, 0, 0)
+    ops.load(i * 1000 + 10, 0, 0, -load, 0, 0, 0)
 
 logger.info("Node Load created")
 
 opsplt.createODB("ShearWall", 'LoadCaseName')
 
 # set recorder
-ops.recorder('Node', '-file', 'output\\1011_load.out', '-node', 1011, '-time',
-             '-dof', 1, 2, 3, 'disp', 'vel', 'accel', 'incrDisp', 'reaction')
+ops.recorder('Node', '-file', 'output\\1011_disp.out', '-node', 1011, '-time',
+             '-dof', 3, 'disp')
+ops.recorder('Node', '-file', 'output\\1011_react.out', '-node', 1011, '-time',
+             '-dof', 3, 'reaction')
 logger.info("recoder created")
 
 # load analyze
@@ -158,20 +160,22 @@ logger.info("analysis [Static] in load")
 ok = ops.analyze(10)
 logger.info("analyze analyze complete was %s", ok == 0)
 
-ops.loadConst('-time', 0)
 ops.wipeAnalysis()
+ops.loadConst('-time', 0)
 
 
 # set hysteresis
 ops.pattern('Plain', 2, 1)
 ops.load(1011, 0, 1, 0, 0, 0, 0)
-ops.recorder('Node', '-file', 'output\\1011_cyc.out', '-node', 1011, '-time',
-             '-dof', 1, 2, 3, 'disp', 'vel', 'accel', 'incrDisp', 'reaction')
-CyclicDisplace(1, 80, 1, 1011, 2, 1E-2, 1000)
+ops.recorder('Node', '-file', 'output\\1011_disp_cy.out', '-node', 1011, '-time',
+             '-dof', 2, 'disp')
+ops.recorder('Node', '-file', 'output\\1011_react_cy.out', '-node', 1011, '-time',
+             '-dof', 2, 'reaction')
+CyclicDisplace(1, 50, 1, 1011, 2, 1E-2, 1000)
 
 
 if __name__ == "__main__":
     # for debug
     ops.printModel()
-    opsplt.plot_model('nodes', 'elements', Model='ShearWall')
+    # opsplt.plot_model('nodes', 'elements', Model='ShearWall')
     # pass
