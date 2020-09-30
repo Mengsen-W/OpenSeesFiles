@@ -68,6 +68,7 @@ def log_init(is_console: bool = True, filedir: str = "output", filename: str = "
     Param: flag = "" before the log write
     '''
     check_path(filedir)
+    print(filedir)
 
     log_filename = filename + "_user.log"
 

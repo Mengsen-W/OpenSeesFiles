@@ -25,7 +25,7 @@ Description: shear wall geometric parameters
 # 0.0 0.16 0.32 0.64 0.96 1.28 1.44 1.60  length
 
 
-from liblog import logger, log_init
+from liblog import log_init
 import time
 
 ASCII_model: str = "\
@@ -116,8 +116,8 @@ c40_con: float = [40, 7, 30.8e6, 3.08e6, -
                   6.16e6, -0.002, -0.005, 0.001, 0.05, 1.283e10]
 
 if __name__ == "__main__":
-    print(hight_div)
+    print("hight_div = ", hight_div)
     print(constraint_div_left)
     print(constraint_div_right)
     print(center_div)
-    print(length_div)
+    print("length_div = ", length_div)
