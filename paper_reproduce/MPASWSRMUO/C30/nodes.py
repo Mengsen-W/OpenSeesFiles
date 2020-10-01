@@ -26,7 +26,7 @@ def set_node():
     for i in range(1, 8):
         ops.fix(i * argu.node_index + 1, *full_fixed)
         logger.info("fix node = %d", i * argu.node_index + 1)
-        ops.fix(i * argu.node_index + 8, 0, 1, 1, 1, 1, 1)
+        ops.fix(i * argu.node_index + 8, 0, 1, 0, 1, 1, 1)
 
     # rigid beam
     # logger.info("rigidness beam on the top")
