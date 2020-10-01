@@ -33,19 +33,16 @@ Written by MengsenWang SZU Chinan\n\
 mengsen_wang@163.com\n\n\
                  Use SI\n\
                  Node Tag                height\n\
- 1011 2011 3011 4011 5011 6011 7011 8011 3.2\n\
- 1010 2010 3010 4010 5010 6010 7010 8010 2.88\n\
- 1009 2009 3009 4009 5009 6009 7009 8009 2.56\n\
- 1008 2008 3008 4008 5008 6008 7008 8008 2.24\n\
- 1007 2007 3007 4007 5007 6007 7007 8007 1.92\n\
- 1006 2006 3006 4006 5006 6006 7006 8006 1.60\n\
- 1005 2005 3005 4005 5005 6005 7005 8005 1.28\n\
- 1004 2004 3004 4004 5004 6004 7004 8004 0.96\n\
- 1003 2003 3003 4003 5003 6003 7003 8003 0.64\n\
- 1002 2002 3002 4002 5002 6002 7002 8002 0.32\n\
- 1001 2001 3001 4001 5001 6001 7001 8001 0.00\n\
- /|\  /|\  /|\  /|\  /|\  /|\  /|\  /|\  full fixed\n\
- 0.0 0.16 0.32 0.64 0.96 1.28 1.44 1.60  length\n\
+ 1008 2008 3008 4008 5008 6008 7008 2.24\n\
+ 1007 2007 3007 4007 5007 6007 7007 1.92\n\
+ 1006 2006 3006 4006 5006 6006 7006 1.60\n\
+ 1005 2005 3005 4005 5005 6005 7005 1.28\n\
+ 1004 2004 3004 4004 5004 6004 7004 0.96\n\
+ 1003 2003 3003 4003 5003 6003 7003 0.64\n\
+ 1002 2002 3002 4002 5002 6002 7002 0.32\n\
+ 1001 2001 3001 4001 5001 6001 7001 0.00\n\
+ /|\  /|\  /|\  /|\  /|\  /|\  /|\  full fixed\n\
+ 0.0 0.15 0.30 0.60 0.90 1.05 1.20  length\n\
 \n\n\
 confined region\n\
 material    absolute thickness(mm)   angle(steel)    material tag\n\
@@ -78,17 +75,17 @@ log_init(True, "output\\",
          time, ASCII_model)
 
 
-length: float = 1.6
+length: float = 1.2
 width: float = 0.2
-hight: float = 3.2
-constraint_coefficient: float = 0.2
-constraint_left_end: float = 0.64
-constraint_right_begin: float = 1.28
-hight_num: int = 11
+hight: float = 2.24
+constraint_coefficient: float = 0.25
+constraint_left_end: float = 0.60
+constraint_right_begin: float = 0.90
+hight_num: int = 8
 constraint_num: int = 3
-center_num: int = 2
-sum_row_num: int = 8
-sum_col_num: int = 11
+center_num: int = 1
+sum_row_num: int = 7
+sum_col_num: int = 8
 node_index: int = 1000
 ndm: int = 3
 ndf: int = 6

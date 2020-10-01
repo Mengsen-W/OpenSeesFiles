@@ -10,7 +10,7 @@ import openseespy.opensees as ops
 from liblog import logger
 
 
-def CyclicDisplace(Ddelta: float, Dnum: int, Dincr: float, Node: float, dof: float, tol: float, iter: float):
+def CyclicDisplace(Ddelta: float, Dnum: int, Dincr: float, Node: int, dof: int, tol: float, iter: float):
     '''
       Ddelta: Displacement increment of each cyclic loading\n
       每一个循环圈的位移增量\n
@@ -31,22 +31,26 @@ def CyclicDisplace(Ddelta: float, Dnum: int, Dincr: float, Node: float, dof: flo
       2 * u/Dincr: reverse direction cyclic step\n
       反向加载的步数 因为要先回到远点再向负方向加载
     '''
-    ops.constraints('Transformation')
+    ops.constraints('Penalty', 1e20, 1e20)
     ops.numberer('RCM')
-    ops.system('UmfPack')
-    ops.test('NormDispIncr', tol, iter, 0, 2)
+    ops.system('BandGeneral')
+    ops.test('NormDispIncr', tol, iter, 0)
+    ops.analysis('Static')
     for ii in range(1, Dnum + 1):
         u = Ddelta * ii
-        negdel = Dincr * -1
-        logger.info("%d Cyclic of Displacement, Plus of Displacement...", ii)
+        negdel = -Dincr
+        logger.info(
+            "%d Cyclic of Displacement, node = %d, dof = %d , Dincr = %f Plus of Displacement...", ii, Node, dof, Dincr)
         ops.integrator('DisplacementControl', Node, dof, Dincr)
         Analysis_Proc(int(u / Dincr))
 
-        logger.info("%d Cyclic of Displacement, Minus of Displacement...", ii)
+        logger.info(
+            "%d Cyclic of Displacement, node = %d, dof = %d, Dincr = %f Minus of Displacement...", ii, Node, dof, negdel)
         ops.integrator('DisplacementControl', Node, dof, negdel)
         Analysis_Proc(int(2 * u / Dincr))
 
-        logger.info("%d Cyclic of Displacement, Back to Zero...", ii)
+        logger.info(
+            "%d Cyclic of Displacement, node = %d, dof = %d, Dincr = %f Back to Zero...", ii, Node, dof, Dincr)
         ops.integrator('DisplacementControl', Node, dof, Dincr)
         Analysis_Proc(int(u / Dincr))
 
@@ -61,52 +65,44 @@ def Analysis_Proc(Num: int):
     for step in range(1, Num + 1):
         logger.info("No. %d of Cyclic. Anaylsis KrylovNewton..", step)
         ops.algorithm('KrylovNewton')
-        ops.analysis('Static')
         ok = ops.analyze(1)
 
         if ok != 0:
-            logger.info("No. %d of Cyclic.Anaylsis Trying Newton ..", step)
+            logger.info("No. %d of Cyclic. Anaylsis Trying Newton ..", step)
             ops.algorithm('Newton')
-            ops.analysis('Static')
             ok = ops.analyze(1)
 
         if ok != 0:
             logger.info(
-                "NO. %d of Cyclic.Anaylsis Trying SecantNewton ..", step)
+                "NO. %d of Cyclic. Anaylsis Trying SecantNewton ..", step)
             ops.algorithm('SecantNewton')
-            ops.analysis('Static')
             ok = ops.analyze(1)
 
         if ok != 0:
             logger.info(
-                "No. %d of Cyclic.Anaylsis Trying ModifiedNewton ..", step)
+                "No. %d of Cyclic. Anaylsis Trying ModifiedNewton ..", step)
             ops.algorithm('ModifiedNewton')
-            ops.analysis('Static')
             ok = ops.analyze(1)
 
         if ok != 0:
             logger.info(
                 "NO. %d of Cyclic. Anaylsis Trying NewtonWithLineSearch ..", step)
             ops.algorithm('NewtonLineSearch')
-            ops.analysis('Static')
             ok = ops.analyze(1)
 
         if ok != 0:
-            logger.info("No. %d of Cyclic.Anaylsis Trying Newton ..", step)
+            logger.info("No. %d of Cyclic. Anaylsis Trying Newton ..", step)
             ops.algorithm('Newton')
-            ops.analysis('Static')
             ok = ops.analyze(1)
 
         if ok != 0:
-            logger.info("No. %d of Cyclic.Anaylsis Trying BFGS ..", step)
+            logger.info("No. %d of Cyclic. Anaylsis Trying BFGS ..", step)
             ops.algorithm('BFGS')
-            ops.analysis('Static')
             ok = ops.analyze(1)
 
         if ok != 0:
             logger.info("No. %d of Cyclic. Anaylsis Trying Broyden ..", step)
-            ops.algorithm('Broyden', count=500)
-            ops.analysis('Static')
+            ops.algorithm('Broyden')
             ok = ops.analyze(1)
 
         if ok != 0:

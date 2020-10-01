@@ -23,12 +23,13 @@ def set_node():
 
     # fix node
     full_fixed: int = [1, 1, 1, 1, 1, 1]
-    for i in range(1, 9):
+    for i in range(1, 8):
         ops.fix(i * argu.node_index + 1, *full_fixed)
         logger.info("fix node = %d", i * argu.node_index + 1)
+        ops.fix(i * argu.node_index + 8, 0, 1, 1, 1, 1, 1)
 
-    # # rigid beam
+    # rigid beam
     # logger.info("rigidness beam on the top")
     # for i in range(1, 7):
-    #     ops.rigidLink('bar', i * argu.node_index + 11,
-    #                   (i + 1) * argu.node_index + 11)
+    #     ops.equalDOF(i * argu.node_index + 8,
+    #                  (i + 1) * argu.node_index + 8, 2)
