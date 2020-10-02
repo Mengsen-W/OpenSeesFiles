@@ -31,26 +31,38 @@ def CyclicDisplace(Ddelta: float, Dnum: int, Dincr: float, Node: int, dof: int, 
       2 * u/Dincr: reverse direction cyclic step\n
       反向加载的步数 因为要先回到远点再向负方向加载
     '''
-    ops.constraints('Penalty', 1e20, 1e20)
-    ops.numberer('RCM')
-    ops.system('BandGeneral')
-    ops.test('NormDispIncr', tol, iter, 0)
-    ops.analysis('Static')
     for ii in range(1, Dnum + 1):
+        print(ii)
+
         u = Ddelta * ii
         negdel = -Dincr
-        logger.info(
-            "%d Cyclic of Displacement, node = %d, dof = %d , Dincr = %f Plus of Displacement...", ii, Node, dof, Dincr)
+        logger.info("%d Cyclic of Displacement, node = %d, dof = %d , Dincr = %f Plus of Displacement...",
+                    ii, Node, dof, Dincr)
+        ops.wipeAnalysis()
+        ops.constraints('Plain')
+        ops.numberer('Plain')
+        ops.system('BandGen')
+        ops.test('NormDispIncr', tol, iter, 0)
         ops.integrator('DisplacementControl', Node, dof, Dincr)
         Analysis_Proc(int(u / Dincr))
 
-        logger.info(
-            "%d Cyclic of Displacement, node = %d, dof = %d, Dincr = %f Minus of Displacement...", ii, Node, dof, negdel)
+        logger.info("%d Cyclic of Displacement, node = %d, dof = %d, Dincr = %f Minus of Displacement...",
+                    ii, Node, dof, negdel)
+        ops.wipeAnalysis()
+        ops.constraints('Plain')
+        ops.numberer('Plain')
+        ops.system('BandGen')
+        ops.test('NormDispIncr', tol, iter, 0)
         ops.integrator('DisplacementControl', Node, dof, negdel)
         Analysis_Proc(int(2 * u / Dincr))
 
-        logger.info(
-            "%d Cyclic of Displacement, node = %d, dof = %d, Dincr = %f Back to Zero...", ii, Node, dof, Dincr)
+        logger.info("%d Cyclic of Displacement, node = %d, dof = %d, Dincr = %f Back to Zero...",
+                    ii, Node, dof, Dincr)
+        ops.wipeAnalysis()
+        ops.constraints('Plain')
+        ops.numberer('Plain')
+        ops.system('BandGen')
+        ops.test('NormDispIncr', tol, iter, 0)
         ops.integrator('DisplacementControl', Node, dof, Dincr)
         Analysis_Proc(int(u / Dincr))
 
@@ -65,6 +77,7 @@ def Analysis_Proc(Num: int):
     for step in range(1, Num + 1):
         logger.info("No. %d of Cyclic. Anaylsis KrylovNewton..", step)
         ops.algorithm('KrylovNewton')
+        ops.analysis('Static')
         ok = ops.analyze(1)
 
         if ok != 0:

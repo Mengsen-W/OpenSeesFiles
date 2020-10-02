@@ -1,5 +1,8 @@
 import openseespy.opensees as ops
 from libCycliAnalysis import CyclicDisplace
+from liblog import log_init
+
+log_init()
 
 ops.reset()
 ops.wipe()
@@ -65,10 +68,12 @@ ops.load(2, 1, 0, 0, 0, 0, 0)
 # ops.analysis('Static')
 # ops.analyze(10)
 
-CyclicDisplace(1, 20, 1, 2, 1, 1e-2, 1000)
+CyclicDisplace(1, 3, 1, 2, 1, 1e-2, 1000)
 
 
 if __name__ == "__main__":
     # for debug
     ops.stop()
-    ops.printModel()
+    # ops.printModel()
+    ops.wipe()
+    ops.reset()
