@@ -31,31 +31,31 @@ nDMaterial   PlateRebar         11               8     0
 #confined region
 # material    absolute thickness   angle(steel)    material tag
 ##cover               12.5                              4
-##d=6transverse     0.1839                0             11
+##d=6transverse     0.2403                0             11
 ##d=6transverse     0.3676                0             11
-##core              24.724                              4
-##core              24.724                              4
-##core              24.724                              4
-##core              24.724                              4
+##core              24.696                              4
+##core              24.696                              4
+##core              24.696                              4
+##core              24.696                              4
 ##d=6transverse     0.3676                0             11
-##d=6transverse     0.1839                0             11
+##d=6transverse     0.2403                0             11
 ##cover               12.5                              4
 
 # section LayeredShell $sectionTag $nLayers $matTag1 $thickness1...$matTagn $thicknessn
-section   LayeredShell      1          10     4       0.0125   11 0.0001839  11  0.0003676  4 0.024724 4 0.024724 4 0.024724 4 0.024724  11  0.0003676 11 0.0001839 4 0.0125
+section   LayeredShell      1          10     4       0.0125   11 0.0002403  11  0.0003676  4 0.024696 4 0.024696 4 0.024696 4 0.024696  11  0.0003676 11 0.0002403 4 0.0125
 
 #middle region
 # material    absolute thickness   angle(steel)    material tag
 ##cover              12.5                               4
-##d=6transverse     0.1839                0             11
+##d=6transverse     0.2403                0             11
 ##d=6longitudinal   0.2356               90             10
-##core             49.581                              4
-##core             49.581                              4
+##core             49.5241                              4
+##core             49.5241                              4
 ##d=6longitudinal   0.2356               90             10
-##d=6transverse     0.1839                0             11
+##d=6transverse     0.2403                0             11
 ##cover              12.5                               4
 
-section   LayeredShell 2 8 4 0.0125 11 0.0001839  10  0.0002356 4 0.049581 4 0.049581  10  0.0002356 11 0.0001839 4 0.0125
+section   LayeredShell 2 8 4 0.0125 11 0.0002403  10  0.0002356 4 0.0495241 4 0.0495241  10  0.0002356 11 0.0002403 4 0.0125
 
 source node.tcl
 source element.tcl
@@ -107,24 +107,25 @@ element truss 79 45 50 223.53e-6 7
 element truss 80 50 55 223.53e-6 7
 fixY 0.0 1 1 1 1 1 1
 
-recorder Node -file node1to5-dof1.txt -time -node 1 2 3 4 5 -dof 1 reaction 
+recorder Node -file 1.txt -time -node 1 2 3 4 5 -dof 1 reaction
 
 pattern Plain 1 Linear {
-load 53 0 -246000 0 0 0 0
+load 53 -246000 0 0 0 0 0
 }
 
-recorder Node -file node53-dof1.txt -time -node  53 -dof 1  disp
+recorder Node -file 53.txt -time -node  53 -dof 1  disp
 
 constraints Plain
 numberer RCM
 system BandGeneral
-test NormDispIncr 1.0e-6 200 ;
-algorithm BFGS -count 100
-integrator LoadControl 0.1;				
-analysis Static				
-analyze 10;					
+test NormDispIncr 1.0e-6 2000
+algorithm Newton
+integrator LoadControl 0.01
+analysis Static
+analyze 100
 
 puts "gravity analyze ok..."
+wipeAnalysis
 loadConst -time 0.0;
 
 timeSeries Path 1 -dt 0.1 -filePath shuju2.txt ;
@@ -133,11 +134,14 @@ pattern Plain 2 1 {
  }
 
 
-constraints Penalty 1e20 1e20;       				
-numberer RCM;					
-system BandGeneral;				
-test NormDispIncr 1.0e-5 1000 2; 				
-algorithm KrylovNewton;		
-integrator LoadControl 0.1;			
-analysis Static	;
+constraints Penalty 1e20 1e20
+numberer RCM
+system BandGeneral
+test NormDispIncr 1.0e-5 1000 2
+algorithm KrylovNewton
+integrator LoadControl 0.1
+analysis Static
 analyze 500
+
+wipe
+reset

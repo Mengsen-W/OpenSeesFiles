@@ -10,7 +10,7 @@ nDMaterial PlaneStressUserMaterial    1       40         7    30.8e6     3.08e6 
 nDMaterial   PlateFromPlaneStress    4        1   1.283e10
 
 #steel
-##d=10 longitudinal reinforced steel in the confined region 
+##d=10 longitudinal reinforced steel in the confined region
 uniaxialMaterial   Steel02        7 379e6   202.7e9  0.01 18.5 0.925 0.15
 ##d=6  transverse reinforced steel and longitudinal reinforced steel in the middle region
 uniaxialMaterial   Steel02        8 392e6   200.6e9  0.01 18.5 0.925 0.15
@@ -26,7 +26,7 @@ nDMaterial   PlateRebar         10               8     90
 nDMaterial   PlateRebar         11               8     0
 
                                                             
-#confined region is divided into 10 layers£¬middle region is divided into 8 layers
+#confined region is divided into 10 layersï¿½ï¿½middle region is divided into 8 layers
 
 #confined region
 # material    absolute thickness   angle(steel)    material tag
@@ -82,6 +82,11 @@ element truss 72 10 15 223.53e-6 7
 element truss 73 15 20 223.53e-6 7
 element truss 74 20 25 223.53e-6 7
 element truss 75 25 30 223.53e-6 7
+element truss 76 30 35 223.53e-6 7
+element truss 77 35 40 223.53e-6 7
+element truss 78 40 45 223.53e-6 7
+element truss 79 45 50 223.53e-6 7
+element truss 80 50 55 223.53e-6 7
 
 fixY 0.0 1 1 1 1 1 1
 
@@ -104,9 +109,10 @@ analysis Static
 analyze 10;					
 
 puts "gravity analyze ok..."
+wipeAnalysis
 loadConst -time 0.0;
 
-timeSeries Path 1 -dt 0.1 -filePath shuju2.txt ;
+timeSeries Path 1 -dt 0.1 -filePath data.txt ;
 pattern Plain 2 1 {
   sp 28 1 1
  }

@@ -35,8 +35,6 @@ def CyclicDisplace(Ddelta: float, Dnum: int, Dincr: float, Node: int, dof: int, 
     ops.numberer('RCM')
     ops.system('BandGeneral')
     ops.test('NormDispIncr', tol, iter, 0)
-    ops.algorithm('Newton')
-    ops.integrator('DisplacementControl', Node, dof, 1)
     ops.analysis('Static')
     for ii in range(1, Dnum + 1):
         u = Ddelta * ii
