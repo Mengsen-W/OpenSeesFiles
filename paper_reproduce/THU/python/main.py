@@ -5,6 +5,7 @@
 
 import time
 from liblog import logger, log_init
+from libCycliAnalysis import CyclicDisplace
 
 import openseespy.opensees as ops
 from data import data
@@ -195,13 +196,13 @@ ops.element('Truss', 80, 50, 55, 223.53e-6, 7)
 
 ops.fixY(0.0, 1, 1, 1, 1, 1, 1)
 
-ops.recorder('Node', '-file', 'output\\1.out', '-time',
-             '-node', 1, 2, 3, 4, 5, '-dof', 1, 'reaction')
+ops.recorder('Node', '-file', 'output\\gravity.out', '-time',
+             '-node', 1, 2, 3, 4, 5, '-dof', 2, 'reaction')
 
 ops.timeSeries('Linear', 1)
 ops.pattern('Plain', 1, 1)
-ops.load(52, -493000, 0, 0, 0, 0, 0)
-ops.load(54, -493000, 0, 0, 0, 0, 0)
+ops.load(52, 0, -493000, 0, 0, 0, 0)
+ops.load(54, 0, -493000, 0, 0, 0, 0)
 ops.constraints('Plain')
 ops.numberer('RCM')
 ops.system('BandGeneral')
@@ -211,25 +212,62 @@ ops.integrator('LoadControl', 0.1)
 ops.analysis('Static')
 ops.analyze(10)
 
-ops.recorder('Node', '-file', 'output\\53.out',
-             '-time', '-node', 53, '-dof', 1, 'disp')
+logger.info("gravity analyze ok...")
 
-
-# logger.info("gravity analyze ok...")
-
+ops.wipeAnalysis()
 ops.loadConst('-time', 0.0)
+ops.remove('recorders')
 
-ops.timeSeries('Path', 2, '-dt', 0.1, '-values', *data)
-ops.pattern('Plain', 2, 2)
-ops.sp(53, 1, 1)
-ops.constraints('Penalty', 1e20, 1e20)
-ops.numberer('RCM')
-ops.system('BandGeneral')
-ops.test('NormDispIncr', 1.0e-5, 1000, 2)
-ops.algorithm('KrylovNewton')
-ops.integrator('LoadControl', 0.1)
-ops.analysis('Static')
-ops.analyze(500)
+ops.recorder('Node', '-file', 'output\\reaction.out', '-time',
+             '-node', 1, 2, 3, 4, 5, '-dof', 1, 'reaction')
+ops.recorder('Node', '-file', 'output\\disp.out',
+             '-time', '-node', 53, '-dof', 1, 'disp')
+sp = False
+
+if sp:
+    ops.timeSeries('Path', 2, '-dt', 0.1, '-values', *data)
+    ops.pattern('Plain', 2, 2)
+    ops.sp(53, 1, 1)
+    ops.constraints('Penalty', 1e20, 1e20)
+    ops.numberer('RCM')
+    ops.system('BandGeneral')
+    ops.test('NormDispIncr', 1.0e-5, 100000, 2)
+    ops.algorithm('KrylovNewton')
+    ops.integrator('LoadControl', 0.1)
+    ops.analysis('Static')
+    ops.analyze(500)
+else:
+    ops.timeSeries('Linear', 2)
+    ops.pattern('Plain', 2, 2)
+    ops.load(53, 1, 0, 0, 0, 0, 0)
+    ops.constraints('Penalty', 1e20, 1e20)
+    ops.numberer('RCM')
+    ops.system('BandGeneral')
+    ops.test('NormDispIncr', 1.0e-2, 1000)
+    ops.integrator('DisplacementControl', 53, 1, 1e-3)
+    ops.algorithm('KrylovNewton')
+    ops.analysis('Static')
+    ops.analyze(5)
+    ops.integrator('DisplacementControl', 53, 1, -1e-3)
+    ops.algorithm('KrylovNewton')
+    ops.analysis('Static')
+    ops.analyze(10)
+    # ops.integrator('DisplacementControl', 53, 1, 1e-3)
+    # ops.algorithm('KrylovNewton')
+    # ops.analysis('Static')
+    # ops.analyze(5)
+    # ops.integrator('DisplacementControl', 53, 1, 1e-3)
+    # ops.algorithm('KrylovNewton')
+    # ops.analysis('Static')
+    # ops.analyze(10)
+    # ops.integrator('DisplacementControl', 53, 1, -1e-3)
+    # ops.algorithm('KrylovNewton')
+    # ops.analysis('Static')
+    # ops.analyze(20)
+    # ops.integrator('DisplacementControl', 53, 1, 1e-3)
+    # ops.algorithm('KrylovNewton')
+    # ops.analysis('Static')
+    # ops.analyze(10)
 
 ops.printModel()
 ops.stop()

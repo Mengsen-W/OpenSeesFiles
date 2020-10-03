@@ -10,6 +10,58 @@ import openseespy.opensees as ops
 from liblog import logger
 
 
+def generated_peek(cycle_type: str = 'Full', d_max: int = 0, increment: float = 0.01, factor: float = 1.0):
+    '''
+    @Brief generate incremental displacements for d_max\n
+    @Param cycle_type:str optional, default=Full
+        -- Push (0->+peak)
+        -- Half (0->+peak->0)
+        -- Full (0->+peak->0->-peak->0)
+    @Param d_max: peak displacement (can be + or negative)\n
+    @Param increment displacement increment (optional, default=0.01, independently of units)\n
+    @Param factor scaling factor (optional, default=1)\n
+    @ iDstepFileName  -- file name where displacement history is stored temporarily, until next disp. peak
+    @ output variable
+    @ iDstep  -- vector of displacement increments
+    '''
+    data: float = []
+    disp = 0
+    d_max = d_max * factor
+
+    if d_max < 0:
+        # avoid the divide by zero
+        dx = -increment
+    else:
+        dx = increment
+
+    num_steps = int(abs(d_max) / increment) + 1
+
+    if cycle_type == 'Full':
+        pass
+    if cycle_type == 'Push':
+        data = push(0, d_max, increment)
+
+    if cycle_type == 'Half':
+        for i in range(num_steps):
+            data.extend(push(0, disp, increment))
+            data.pop()
+            data.extend(push(disp, 0, -increment))
+            data.pop()
+            disp = disp + increment
+            # data.extend(push(0, disp, -increment))
+    return data
+
+
+def push(start: float, end: float, inc: float):
+    data: float = []
+    num = int(abs((end - start) / inc))
+    disp = start
+    for _ in range(num + 1):
+        data.append(disp)
+        disp = disp + inc
+    return data
+
+
 def CyclicDisplace(Ddelta: float, Dnum: int, Dincr: float, Node: int, dof: int, tol: float, iter: float):
     '''
       Ddelta: Displacement increment of each cyclic loading\n
@@ -43,6 +95,7 @@ def CyclicDisplace(Ddelta: float, Dnum: int, Dincr: float, Node: int, dof: int, 
         ops.numberer('Plain')
         ops.system('BandGen')
         ops.test('NormDispIncr', tol, iter, 0)
+        ops.analysis('Static')
         ops.integrator('DisplacementControl', Node, dof, Dincr)
         Analysis_Proc(int(u / Dincr))
 
@@ -53,6 +106,7 @@ def CyclicDisplace(Ddelta: float, Dnum: int, Dincr: float, Node: int, dof: int, 
         ops.numberer('Plain')
         ops.system('BandGen')
         ops.test('NormDispIncr', tol, iter, 0)
+        ops.analysis('Static')
         ops.integrator('DisplacementControl', Node, dof, negdel)
         Analysis_Proc(int(2 * u / Dincr))
 
@@ -63,6 +117,7 @@ def CyclicDisplace(Ddelta: float, Dnum: int, Dincr: float, Node: int, dof: int, 
         ops.numberer('Plain')
         ops.system('BandGen')
         ops.test('NormDispIncr', tol, iter, 0)
+        ops.analysis('Static')
         ops.integrator('DisplacementControl', Node, dof, Dincr)
         Analysis_Proc(int(u / Dincr))
 
@@ -77,7 +132,6 @@ def Analysis_Proc(Num: int):
     for step in range(1, Num + 1):
         logger.info("No. %d of Cyclic. Anaylsis KrylovNewton..", step)
         ops.algorithm('KrylovNewton')
-        ops.analysis('Static')
         ok = ops.analyze(1)
 
         if ok != 0:
@@ -123,4 +177,5 @@ def Analysis_Proc(Num: int):
 
 
 if __name__ == "__main__":
-    pass
+    displacements = generated_peek('Half', 2, 0.5)
+    print(displacements)
