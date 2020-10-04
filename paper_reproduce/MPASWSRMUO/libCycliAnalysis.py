@@ -10,7 +10,7 @@ import openseespy.opensees as ops
 from liblog import logger
 
 
-def generated_peek(cycle_type: str = 'Full', d_max: int = 0, increment: float = 0.01, factor: float = 1.0):
+def generated_peek(cycle_type: str = 'Full', d_max: float = 0, increment: float = 0.01, factor: float = 1.0):
     '''
     @Brief generate incremental displacements for d_max\n
     @Param cycle_type:str optional, default=Full
@@ -37,24 +37,32 @@ def generated_peek(cycle_type: str = 'Full', d_max: int = 0, increment: float = 
     num_steps = int(abs(d_max) / increment) + 1
 
     if cycle_type == 'Full':
-        pass
+        for _ in range(num_steps):
+            data.extend(push(0, disp, increment))
+            data.pop()
+            data.extend(push(disp, 0, -increment))
+            data.pop()
+            # data.extend(data[::-1])
+            disp = disp + increment
+        # data.append(0)
+
     if cycle_type == 'Push':
-        data = push(0, d_max, increment)
+        data.extend(push(0, d_max, increment))
 
     if cycle_type == 'Half':
-        for i in range(num_steps):
+        for _ in range(num_steps):
             data.extend(push(0, disp, increment))
             data.pop()
             data.extend(push(disp, 0, -increment))
             data.pop()
             disp = disp + increment
-            # data.extend(push(0, disp, -increment))
+        data.append(0)
     return data
 
 
 def push(start: float, end: float, inc: float):
     data: float = []
-    num = int(abs((end - start) / inc))
+    num = abs(int((end - start) / inc))
     disp = start
     for _ in range(num + 1):
         data.append(disp)
@@ -177,5 +185,7 @@ def Analysis_Proc(Num: int):
 
 
 if __name__ == "__main__":
-    displacements = generated_peek('Half', 2, 0.5)
-    print(displacements)
+    displacements1 = generated_peek('Full', 0.5, 0.5)
+    print(displacements1)
+    displacements2 = generated_peek('Half', 0.5, 0.5)
+    print(displacements2)
