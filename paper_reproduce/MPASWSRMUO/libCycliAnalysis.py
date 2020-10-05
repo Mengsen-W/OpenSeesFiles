@@ -10,63 +10,38 @@ import openseespy.opensees as ops
 from liblog import logger
 
 
-def generated_peek(cycle_type: str = 'Full', d_max: float = 0, increment: float = 0.01, factor: float = 1.0):
-    '''
-    @Brief generate incremental displacements for d_max\n
-    @Param cycle_type:str optional, default=Full
-        -- Push (0->+peak)
-        -- Half (0->+peak->0)
-        -- Full (0->+peak->0->-peak->0)
-    @Param d_max: peak displacement (can be + or negative)\n
-    @Param increment displacement increment (optional, default=0.01, independently of units)\n
-    @Param factor scaling factor (optional, default=1)\n
-    @ iDstepFileName  -- file name where displacement history is stored temporarily, until next disp. peak
-    @ output variable
-    @ iDstep  -- vector of displacement increments
-    '''
+def push(begin: float, end: float, incr: float):
     data: float = []
-    disp = 0
-    d_max = d_max * factor
-
-    if d_max < 0:
-        # avoid the divide by zero
-        dx = -increment
-    else:
-        dx = increment
-
-    num_steps = int(abs(d_max) / increment) + 1
-
-    if cycle_type == 'Full':
-        for _ in range(num_steps):
-            data.extend(push(0, disp, increment))
-            data.pop()
-            data.extend(push(disp, 0, -increment))
-            data.pop()
-            # data.extend(data[::-1])
-            disp = disp + increment
-        # data.append(0)
-
-    if cycle_type == 'Push':
-        data.extend(push(0, d_max, increment))
-
-    if cycle_type == 'Half':
-        for _ in range(num_steps):
-            data.extend(push(0, disp, increment))
-            data.pop()
-            data.extend(push(disp, 0, -increment))
-            data.pop()
-            disp = disp + increment
-        data.append(0)
+    num = abs(int((end - begin) / incr))
+    data.append(begin)
+    for _ in range(num):
+        data.append(incr + data[-1])
     return data
 
 
-def push(start: float, end: float, inc: float):
+def half(begin: float, end: float, incr: float):
     data: float = []
-    num = abs(int((end - start) / inc))
-    disp = start
-    for _ in range(num + 1):
-        data.append(disp)
-        disp = disp + inc
+    num = abs(int((end - begin) / incr)) + 1
+    data.append(begin)
+    for i in range(num):
+        for _ in range(i):
+            data.append(incr + data[-1])
+        for _ in range(i):
+            data.append(data[-1] - incr)
+    return data
+
+
+def full(begin: float, end: float, incr: float):
+    num = int((end - begin) / incr) + 1
+    data: float = []
+    data.append(begin)
+    for i in range(num):
+        for _ in range(i):
+            data.append(incr + data[-1])
+        for _ in range(2*i):
+            data.append(data[-1] - incr)
+        for _ in range(i):
+            data.append(incr + data[-1])
     return data
 
 
@@ -185,7 +160,9 @@ def Analysis_Proc(Num: int):
 
 
 if __name__ == "__main__":
-    displacements1 = generated_peek('Full', 0.5, 0.5)
-    print(displacements1)
-    displacements2 = generated_peek('Half', 0.5, 0.5)
-    print(displacements2)
+    data = push(0, 3, 0.5)
+    print(data)
+    data = half(0, 3, 0.5)
+    print(data)
+    data = full(0, 3, 0.5)
+    print(data)
