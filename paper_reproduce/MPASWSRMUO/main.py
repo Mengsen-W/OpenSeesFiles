@@ -5,13 +5,12 @@ Last Modified by: Mengsen.Wang
 Last Modified time: 2020-09-19 10:53:01
 """
 
-import openseespy.postprocessing.Get_Rendering as opsplt
+# import openseespy.postprocessing.Get_Rendering as opsplt
 import openseespy.opensees as ops
 
 import argument as argu
 from liblog import logger
-from libCycliAnalysis import CyclicDisplace
-
+import libCycliAnalysis as lib
 import perprocess
 import nodes
 
@@ -64,7 +63,32 @@ ops.recorder('Node', '-file', 'output\\node1008.out',
              '-time', '-node', 1008, '-dof', 1, 'disp')
 ops.pattern('Plain', 2, 1)
 ops.load(1008, 1, 0, 0, 0, 0, 0)
-CyclicDisplace(1e-3, 20, 1e-3, 1008, 1, 1e-2, 1000)
+# lib.CyclicDisplace(1e-3, 5, 1e-3, 1008, 1, 1e-2, 10000000)
+
+disp = lib.full(0, 5, 1e-2)
+
+ops.system("SparseGeneral", "-piv")    # Overkill, but may need the pivoting!
+ops.test("NormUnbalance", 1.0e-2, 100000, 0)
+ops.numberer("Plain")
+ops.constraints("Plain")
+
+D0 = 0.0
+for Dstep in disp:
+    D1 = Dstep
+    Dincr = D1-D0
+    ops.algorithm("KrylovNewton")
+    ops.integrator("DisplacementControl",
+                   1008, 1, Dincr)
+    ops.analysis("Static")
+    ok = ops.analyze(1)
+    # ----------------------------------------------if convergence failure-------------------------
+    D0 = D1  # move to next step
+    # end Dstep
+    if ok != 0:
+        logger.info("Analysis failed at %d step.", Dstep)
+    else:
+        logger.info("Analysis completed successfully.")
+
 
 if __name__ == "__main__":
     # for debug
