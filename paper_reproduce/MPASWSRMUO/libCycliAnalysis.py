@@ -11,38 +11,38 @@ from liblog import logger
 
 
 def push(begin: float, end: float, incr: float):
-    data: float = []
+    _data: float = []
     num = abs(int((end - begin) / incr))
-    data.append(begin)
+    _data.append(begin)
     for _ in range(num):
-        data.append(incr + data[-1])
-    return data
+        _data.append(incr + data[-1])
+    return _data
 
 
 def half(begin: float, end: float, incr: float):
-    data: float = []
+    _data: float = []
     num = abs(int((end - begin) / incr)) + 1
-    data.append(begin)
+    _data.append(begin)
     for i in range(num):
         for _ in range(i):
-            data.append(incr + data[-1])
+            _data.append(incr + data[-1])
         for _ in range(i):
-            data.append(data[-1] - incr)
+            _data.append(data[-1] - incr)
     return data
 
 
 def full(begin: float, end: float, incr: float):
     num = int((end - begin) / incr) + 1
-    data: float = []
-    data.append(begin)
+    _data: float = []
+    _data.append(begin)
     for i in range(num):
         for _ in range(i):
-            data.append(incr + data[-1])
+            _data.append(incr + data[-1])
         for _ in range(2*i):
-            data.append(data[-1] - incr)
+            _data.append(data[-1] - incr)
         for _ in range(i):
-            data.append(incr + data[-1])
-    return data
+            _data.append(incr + data[-1])
+    return _data
 
 
 def CyclicDisplace(Ddelta: float,
@@ -72,7 +72,7 @@ def CyclicDisplace(Ddelta: float,
       2 * u/Dincr: reverse direction cyclic step\n
       反向加载的步数 因为要先回到远点再向负方向加载
     '''
-    ops.constraints("Plain")
+    ops.constraints("Transformation")
     ops.numberer("RCM")
     ops.system("FullGeneral")
     ops.test('NormUnbalance', tol, ite, 0)
@@ -110,16 +110,8 @@ def Analysis_Proc(Num: int, Node: int, dof: int, Dincr: float):
         ok = ops.analyze(1)
 
         if ok != 0:
-            logger.info("No. %d of Cyclic. Anaylsis Trying Newton ..", step)
-            ops.algorithm('Newton')
-            ops.integrator("DisplacementControl",
-                           Node, dof, Dincr)
-            ops.analysis("Static")
-            ok = ops.analyze(1)
-
-        if ok != 0:
             logger.info(
-                "NO. %d of Cyclic. Anaylsis Trying SecantNewton ..", step)
+                "No. %d of Cyclic. Anaylsis Trying SecantNewton ..", step)
             ops.algorithm('SecantNewton')
             ops.integrator("DisplacementControl",
                            Node, dof, Dincr)
@@ -128,8 +120,18 @@ def Analysis_Proc(Num: int, Node: int, dof: int, Dincr: float):
 
         if ok != 0:
             logger.info(
-                "No. %d of Cyclic. Anaylsis Trying ModifiedNewton ..", step)
-            ops.algorithm('ModifiedNewton')
+                "NO. %d of Cyclic. Anaylsis Trying NewtonLineSearch ..", step)
+            ops.algorithm('NewtonLineSearch', True,  False, True,
+                          False, 0.8, 1000, 0.1, 10.0)
+            ops.integrator("DisplacementControl",
+                           Node, dof, Dincr)
+            ops.analysis("Static")
+            ok = ops.analyze(1)
+
+        if ok != 0:
+            logger.info(
+                "No. %d of Cyclic. Anaylsis Trying PeriodicNewton ..", step)
+            ops.algorithm('PeriodicNewton')
             ops.integrator("DisplacementControl",
                            Node, dof, Dincr)
             ops.analysis("Static")
