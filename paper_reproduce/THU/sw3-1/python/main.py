@@ -5,7 +5,6 @@
 
 import time
 from liblog import logger, log_init
-from libCycliAnalysis import CyclicDisplace
 
 import openseespy.opensees as ops
 from data import data
