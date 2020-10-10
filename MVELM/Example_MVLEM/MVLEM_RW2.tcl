@@ -164,7 +164,7 @@ recorder Element -file $dataDir/MVLEM_Fgl.out -time -ele 1 2 3 globalForce
 recorder Element -file $dataDir/MVLEM_Curvature.out -time -ele 1 2 3 Curvature
 
 # Fiber responses
-recorder Element -file $dataDir/MVLEM_fiber_strain.out -time -ele 1 fiber_strain 
+recorder Element -file $dataDir/MVLEM_fiber_strain.out -time -ele 1 fiber_strain
 recorder Element -file $dataDir/MVLEM_fiber_stress_concrete.out -time -ele 1 fiber_stress_concrete
 recorder Element -file $dataDir/MVLEM_fiber_stress_steel.out -time -ele 1 fiber_stress_steel
 

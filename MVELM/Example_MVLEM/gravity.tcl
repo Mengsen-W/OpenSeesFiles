@@ -40,3 +40,5 @@ analysis 	Static
 
 # Run analysis
 analyze 10
+
+wipeAnalysis

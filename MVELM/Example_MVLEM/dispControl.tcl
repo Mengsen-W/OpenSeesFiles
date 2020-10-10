@@ -12,7 +12,7 @@ loadConst -time 0.0
 set Fact $H;	# scale drift ratio by storey height for displacement cycles
 
 # Set lateral load pattern with a Linear TimeSeries
-set Plateral 1.0;		# Reference lateral load	
+set Plateral 1.0;		# Reference lateral load
 pattern Plain 200 "Linear" {
 
 	load $IDctrlNode $Plateral 0.0 0.0

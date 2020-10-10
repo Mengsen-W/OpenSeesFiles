@@ -29,7 +29,7 @@ nDMaterial   PlateRebar         10               8     90
 ##d=6
 nDMaterial   PlateRebar         11               8     0
 
-#confined region is divided into 10 layers��middle region is divided into 8 layers
+#confined region is divided into 10 layers middle region is divided into 8 layers
 
 #confined region
 # material    absolute thickness   angle(steel)    material tag
