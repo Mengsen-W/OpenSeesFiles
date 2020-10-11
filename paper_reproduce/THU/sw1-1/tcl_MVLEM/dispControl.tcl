@@ -29,7 +29,6 @@ source LibGeneratePeaks.tcl
 set fmt1 "%s Cyclic analysis: CtrlNode %.3i, dof %.1i, Disp=%.4f %s";
 
 foreach Dmax $iDmax {
-  puts "coming"
   set iDstep [GeneratePeaks $Dmax $Dincr $CycleType $Fact];	# this proc is defined above
 
   for {set i 1} {$i <= $Ncycles} {incr i 1} {

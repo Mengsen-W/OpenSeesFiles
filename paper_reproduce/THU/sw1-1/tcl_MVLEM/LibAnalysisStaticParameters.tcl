@@ -50,7 +50,7 @@ system $systemTypeStatic
 variable TolStatic 1.e-5;                        # Convergence Test: tolerance
 variable maxNumIterStatic 100;                # Convergence Test: maximum number of iterations that will be performed before "failure to converge" is returned
 variable printFlagStatic 0;                # Convergence Test: flag used to print information on convergence (optional)        # 1: print information on each step; 
-variable testTypeStatic NormDispIncr;	# Convergence-test type
+variable testTypeStatic NormUnbalance;	# Convergence-test type
 test $testTypeStatic $TolStatic $maxNumIterStatic $printFlagStatic;
 # for improved-convergence procedure:
 	variable maxNumIterConvergeStatic 2000;

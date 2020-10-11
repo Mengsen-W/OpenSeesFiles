@@ -11,7 +11,7 @@ reset
 wipe
 
 # Set Up Directories
-set modelName "MVLEM";        # Model Name
+set modelName "THU";        # Model Name
 set dataDir MVLEM_$modelName; # Name of output folder
 file mkdir $dataDir;
 
@@ -24,6 +24,7 @@ model BasicBuilder -ndm 2 -ndf 3;
 
 # Wall Geometry
 set H 2.0;    # Wall height
+set W 1.0;    # Wall width
 set t 0.125;  # Wall thickness
 
 # Create nodes
@@ -63,16 +64,16 @@ set IDctrlDOF 1;
 # steel Y boundary
 set fyYbp 379e6;  # fy - tension
 set bybp 0.01;    # strain hardening - tension
-set fyYbn 379e5;  # fy - compression
-set bybn 0.02;    # strain hardening - compression
+set fyYbn 370e6;  # fy - compression
+set bybn 0.01;    # strain hardening - compression
 set Esbn 202.7e9; # Young's modulus
 
 # steel Y web
 set fyYwp 392e6;  # fy - tension
-set bywp 0.01;    # strain hardening - tension
-set fyYwn 392e5;  # fy - compression
-set bywn 0.02;    # strain hardening - compression
-set Eswn 200.6e9; # Young's modulus'
+set bywp 0.001;    # strain hardening - tension
+set fyYwn 390e6;  # fy - compression
+set bywn 0.01;    # strain hardening - compression
+set Eswn 200.6e9; # Young's modulus
 
 # steel misc
 set R0 20.0;    # initial value of curvature parameter
@@ -80,8 +81,11 @@ set a1 0.925;   # curvature degradation parameter
 set a2 0.0015;  # curvature degradation parameter
 
 # Build steel materials
-uniaxialMaterial    SteelMPF  1 $fyYbp $fyYbn $Esbn $bybp $bybn $R0 $a1 $a2; # steel Y boundary
-uniaxialMaterial    SteelMPF  2 $fyYwp $fyYwn $Eswn $bywp $bywn $R0 $a1 $a2; # steel Y web
+# uniaxialMaterial    SteelMPF  1 $fyYbp $fyYbn $Esbn $bybp $bybn $R0 $a1 $a2; # steel Y boundary
+# uniaxialMaterial    SteelMPF  2 $fyYwp $fyYwn $Eswn $bywp $bywn $R0 $a1 $a2; # steel Y web
+
+uniaxialMaterial Steel02 1 379e6 202.7e9 0.01 18.5 0.925 0.15
+uniaxialMaterial Steel02 2 392e6 200.6e9 0.01 18.5 0.925 0.15
 
 # Set MVLEM Reinforcing Ratios
 set rouYb 0.027130; 	# Y boundary
@@ -91,22 +95,22 @@ set rouYw 0.009; 	    # Y web
 # uniaxialMaterial ConcreteCM $mattag  $fpcc  $epcc  $Ec  $rc  $xcrn   $ft  $et  $rt   $xcrp <-GapClose $gap>
 
 # unconfined
-set fpc 20.7e6;   # peak compressive stress
-set ec0 -0.002;   # strain at peak compressive stress
-set ft 2.07e6;    # peak tensile stress
-set et 0.08;      # strain at peak tensile stress
-set Ec 258e6;     # Young's modulus
-set xcrnu 4.14e6; # cracking strain - compression
-set xcrp 10000;   # cracking strain - tension
+set fpc 20.7e6;     # peak compressive stress
+set ec0 0.002;     # strain at peak compressive stress
+set ft 2.07e6;      # peak tensile stress
+set et 0.08;        # strain at peak tensile stress
+set Ec 1.087e10;    # Young's modulus
+set xcrnu 4.14e6;   # cracking strain - compression
+set xcrp 10000;     # cracking strain - tension
 set ru 0.7;         # shape parameter - compression
-set rt 0.12;       # shape parameter - tension
+set rt 0.12;        # shape parameter - tension
 
 # confined
-set fpcc 20.7e6; 	# peak compressive stress
-set ec0c -0.002;	# strain at peak compressive stress
-set Ecc 258e6; 	  # Young's modulus
-set xcrnc 4.14e6;	# cracking strain - compression
-set rc 7.3049;		# shape parameter - compression
+set fpcc 20.7e6;      # peak compressive stress
+set ec0c 0.002;      # strain at peak compressive stress
+set Ecc 1.087e10;     # Young's modulus
+set xcrnc 4.14e6;     # cracking strain - compression
+set rc 0.7;           # shape parameter - compression
 
 # Build concrete materials
 # confined concrete
@@ -118,7 +122,7 @@ uniaxialMaterial ConcreteCM 4 -$fpc   $ec0   $Ec  $ru  $xcrnu  $ft  $et  $rt  $x
 # uniaxialMaterial Elastic $matTag $E <$eta> <$Eneg>
 # NOTE: large shear stiffness assigned since only flexural response
 set Ashweb 0.125;				# Gross area of the wall cross section
-set G 1875000;					# Shear Modulus
+set G 1.875e9;					# Shear Modulus
 set GAs [expr $G * $Ashweb]; 	# Shear Stiffness
 
 # Build shear material
@@ -158,7 +162,7 @@ initialize
 # ------------------------------
 
 # Nodal recorders
-recorder Node -file $dataDir/MVLEM_Dtop.out -time -node $IDctrlNode -dof 1 disp
+recorder Node -file $dataDir/MVLEM_Dtop.out -time -node $IDctrlNode -dof $IDctrlDOF disp
 recorder Node -file $dataDir/MVLEM_DOFs.out -time -node 1 2 3 4 -dof 1 2 3 disp
 
 # Element recorders
@@ -188,5 +192,5 @@ set iDmax "0.001 0.002 0.003 0.004 0.005 0.006 0.007 0.008 0.009 0.01";
 set Dincr 0.0001;		# displacement increment for displacement controlled analysis.
 set CycleType Full;		# type of static analysis: Full / Push / Half
 set Ncycles 1;			# specify the number of cycles at each peak
-set Tol 1.0e-5;
+set Tol 1.0e-3;
 set LunitTXT "m";

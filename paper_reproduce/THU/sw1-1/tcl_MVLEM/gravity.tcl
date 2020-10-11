@@ -25,7 +25,7 @@ system BandGeneral;
 
 # Create the convergence test, the norm of the residual with a tolerance of
 # 1e-5 and a max number of iterations of 100
-test NormDispIncr $Tol  100 0;
+test NormDispIncr $Tol  1000 0;
 
 # Create the DOF numberer, the reverse Cuthill-McKee algorithm
 numberer RCM;
