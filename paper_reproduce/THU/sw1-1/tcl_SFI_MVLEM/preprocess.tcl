@@ -3,6 +3,7 @@
 # @Last Modified by: Mengsen.Wang
 # @Last Modified time: 2020-10-10 15:02:04
 
+// UNDO
 set modelName "THU"
 set dataDir SFI_MVLEM_$modelName
 file mkdir $dataDir
