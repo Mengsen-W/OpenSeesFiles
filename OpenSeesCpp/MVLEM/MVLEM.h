@@ -29,6 +29,14 @@
 #include <Matrix.h>
 #include <Vector.h>
 
+//---- for debug
+
+class Element;
+class Matrix;
+class Vector;
+
+// ---- for debug
+
 class Node;
 class Channel;
 class UniaxialMaterial;
