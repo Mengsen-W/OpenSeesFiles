@@ -15,7 +15,7 @@ proc ModelInfo_Proc { FileName } {
   if { [file exists output] == 0 } {
       file mkdir log
   }
-  logFile output/$FileName
+  logFile log/$FileName
 
   puts [getTime]
   puts [clock seconds]
