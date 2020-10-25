@@ -11,33 +11,24 @@ wipe
 source LibLog.tcl
 
 set model_name "LSTS"
-set data_dir dir_$model_name
-file mkdir data_dir
-
 ModelInfo_Proc modelLog.txt
 
 model basic -ndm 3 -ndf 6
 
-source node.tcl
-source section.tcl
-source element.tcl
+source pre.tcl
 source gravity.tcl
 
-recorder Node -file $data_dir/F_S_41.out -time -node 41 -dof 2 3 Disp
-recorder Node -file $data_dir/F_S_42.out -time -node 42 -dof 2 3 Disp
-recorder Node -file $data_dir/F_S_43.out -time -node 43 -dof 2 3 Disp
-recorder Node -file $data_dir/F_S_44.out -time -node 44 -dof 2 3 Disp
-
-constraints Transformation
+constraints Plain
 numberer RCM
-system BandSPD
-test NormDispIncr 1.0e-6 6 2
+system FullGeneral
+test NormDispIncr 1 10000000 1
 algorithm Newton
-integrator LoadControl 0.1
+integrator ArcLength 1 1
 analysis Static
-analyze 10
+analyze 1000000
 
-ModelInfo_Proc modelInfo.txt
+# printA -file matrix2.txt
+# ModelInfo_Proc modelInfo.txt
 
 wipe
 reset
