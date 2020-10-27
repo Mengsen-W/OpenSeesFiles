@@ -21,7 +21,7 @@ source gravity.tcl
 constraints Plain
 numberer RCM
 system FullGeneral
-test NormDispIncr 1 10000000 1
+test NormDispIncr 1 1000 1
 algorithm Newton
 integrator ArcLength 1 1
 analysis Static
