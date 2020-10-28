@@ -21,11 +21,11 @@ source gravity.tcl
 constraints Plain
 numberer RCM
 system FullGeneral
-test NormDispIncr 1 1000 1
-algorithm Newton
-integrator ArcLength 1 1
+test NormDispIncr 1 10000000 1
+algorithm KrylovNewton
+integrator LoadControl 0.1
 analysis Static
-analyze 1000000
+analyze 10000000
 
 # printA -file matrix2.txt
 # ModelInfo_Proc modelInfo.txt
