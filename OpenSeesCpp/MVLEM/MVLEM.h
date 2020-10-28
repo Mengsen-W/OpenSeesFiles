@@ -1,7 +1,7 @@
 // Code developed by: Kristijan Kolozvari, California State University,
 // Fullerton
-//		      Kutay Orakcal, Bogazici University, Istanbul, Turkey
-//		      John Wallace, UCLA
+//          Kutay Orakcal, Bogazici University, Istanbul, Turkey
+//          John Wallace, UCLA
 //
 // Created: 07/2015
 //
