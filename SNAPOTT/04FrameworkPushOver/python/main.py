@@ -34,7 +34,7 @@ recorder.recorder_create()
 load.dead_load()
 analysis.analysis_plain_load(1.0e-6, 200, 0.1, 10)
 ops.loadConst('-time', 0)
-
+ops.wipeAnalysis()
 load.push_load()
 analysis.analysis_plain_disp(1.0e-3, 1000, 8, 1, 3, 100)
 
