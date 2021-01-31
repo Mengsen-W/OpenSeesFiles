@@ -30,7 +30,6 @@
 
 # sudo apt-get install subversion
 # svn co svn://peera.berkeley.edu/usr/local/svn/OpenSees/trunk OpenSees
-# sudo apt-get install emacs
 # sudo apt-get install make
 # sudo apt-get install tcl8.6
 # sudo apt-get install tcl8.6-dev
@@ -89,7 +88,7 @@ CXX11 = -DUSE_CXX11
 # remove the directory from DIRS.
 
 BASE		= /usr
-HOME		= /home/Mengsen/Opensees
+HOME		= /home/OpenSees
 FE		= $(HOME)/OpenSees/SRC
 
 AMDdir       = $(HOME)/OpenSees/OTHER/AMD
@@ -186,7 +185,7 @@ C++FLAGS         = -Wall -D_LINUX -D_UNIX  -D_TCL85 -DUSE_CXX11 \
 	$(GRAPHIC_FLAG) $(RELIABILITY_FLAG) $(DEBUG_FLAG) \
 	$(PROGRAMMING_FLAG) -fPIC -ffloat-store
 CFLAGS          = -Wall -fPIC
-FFLAGS          = -Wall -fPIC
+FFLAGS          = -Wall -fPIC -std=f95
 
 # Linker
 LINKER          = $(CC++)
@@ -198,7 +197,7 @@ C++FLAGS         = -Wall -D_LINUX -D_UNIX  -D_TCL85 -DUSE_CXX11 \
 	$(GRAPHIC_FLAG) $(RELIABILITY_FLAG) $(DEBUG_FLAG) \
 	$(PROGRAMMING_FLAG) -O3 -ffloat-store 
 CFLAGS          = -Wall -O2
-FFLAGS          = -Wall -O
+FFLAGS          = -Wall -O -std=f95
 
 # Linker
 LINKER          = $(CC++)
@@ -289,15 +288,7 @@ MACHINE_INCLUDES        = -I/usr/include \
 include $(FE)/Makefile.incl
 
 #TCL_INCLUDES = -I/usr/includes/tcl-private/generic
-TCL_INCLUDES = -I/usr/include/tcl8.6
-PYTHON_INCLUDES = -I/usr/include/python3.6m
+TCL_INCLUDES = -I/usr/include
+PYTHON_INCLUDES = -I/usr/include/python3.9
 
 INCLUDES = $(TCL_INCLUDES) $(FE_INCLUDES) $(MACHINE_INCLUDES) $(PYTHON_INCLUDES)
-
-
-
-
-
-
-
-
