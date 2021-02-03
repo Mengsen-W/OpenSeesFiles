@@ -5,24 +5,24 @@
 # * @Last Modified time: 2020-03-05 8:10:31
 
 # C40 concrete
-nDMaterial PlaneStressUserMaterial 1 40 7 31.8 3.18 -6.16 -0.002 -0.005 0.001 0.01
+nDMaterial PlaneStressUserMaterial 1 40 7 31.8 3.18 -6.36 -0.002 -0.005 0.001 0.05
 nDMaterial PlateFromPlaneStress 2 1 1.23E4
 
 
 # middle SFCB
-uniaxialMaterial Steel02 3 240 130662 0 10 0.925 0.15
+uniaxialMaterial Steel02 3 276 130662 0.01 10 0.925 0.15
 
 # mainSFCB
-uniaxialMaterial Steel02 4 365 129433 0 15 0.925 0.15
+uniaxialMaterial Steel02 4 419.75 129433 0.01 10 0.925 0.15
 
 # GFRP
-uniaxialMaterial Steel02 5 960 52000 0 15 0.925 0.15
+uniaxialMaterial Steel02 5 1104 52000 0.01 10 0.925 0.15
 
 # GFRP 箍筋层
 nDMaterial PlateRebar 6 5 0
 
 # GRFP拉索
-uniaxialMaterial Steel02 7 1265 64900 0 15 0.925 0.15
+uniaxialMaterial Steel02 7 1454.75 64900 0.01 15 0.925 0.15 0 1 0 1 20
 
 # 边缘约束区分层壳
 #confined region

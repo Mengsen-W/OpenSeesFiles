@@ -25,8 +25,8 @@
 
 proc Cyclic_Function { Ddelta Dnum Dincr Node dof tol iter } {
     constraints Transformation
-    numberer RCM
-    system UmfPack
+    numberer Plain
+    system BandGeneral
     test NormDispIncr $tol $iter 0
     analysis Static
     for {set ii 1} {$ii <=$Dnum} {incr ii} {
