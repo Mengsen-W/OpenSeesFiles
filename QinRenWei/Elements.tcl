@@ -60,14 +60,14 @@ for { set j 11 } { $j <= 13 } { incr j } {
 }
 
 # middle SFCB
-for { set j 6 } { $j <= 10 } { incr j } {
-    for { set i 1} { $i < 26 } { incr i } {
-        set TrussID [expr $j * 10000 + $i]
-        set nodei [expr $i *100 + $j]
-        set nodej [expr ($i + 1) * 100 + $j]
-        element truss $TrussID $nodei $nodej 78.540 3
-    }
-}
+# for { set j 6 } { $j <= 10 } { incr j } {
+#     for { set i 1} { $i < 26 } { incr i } {
+#         set TrussID [expr $j * 10000 + $i]
+#         set nodei [expr $i *100 + $j]
+#         set nodej [expr ($i + 1) * 100 + $j]
+#         element truss $TrussID $nodei $nodej 78.540 3
+#     }
+# }
 
 # GFRP 拉索
 for { set i 1 } { $i < 26 } { incr i } {
