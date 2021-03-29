@@ -1,3 +1,12 @@
+<!--
+ * @Date: 2021-02-17 14:04:25
+ * @Author: Mengsen Wang
+ * @LastEditors: Mengsen Wang
+ * @LastEditTime: 2021-03-24 16:00:25
+ * @FilePath: \OpenSeesFiles\paper\parameter_characteristics.md
+ * @Description: file content
+-->
+
 # 1. 同济实验
 
 ## SW01
