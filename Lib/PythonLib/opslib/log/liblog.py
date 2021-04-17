@@ -1,16 +1,16 @@
-"""
-Author: Mengsen.Wang
-Date: 2020-09-19 22:33:57
-Last Modified by: Mengsen.Wang
-Last Modified time: 2020-09-19 22:33:57
-Description: set log
-"""
+'''
+Date: 2021-02-17 14:04:25
+Author: Mengsen Wang
+LastEditors: Mengsen Wang
+LastEditTime: 2021-04-09 11:58:18
+FilePath: \OpenSeesFiles\Lib\PythonLib\opslib\log\liblog.py
+Description: file content
+'''
 
 import os
 import shutil
 import logging
 import openseespy.opensees as ops
-
 logger = logging.getLogger(__name__)
 
 

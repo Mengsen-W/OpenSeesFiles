@@ -1,11 +1,13 @@
+'''
+Date: 2021-02-17 14:04:25
+Author: Mengsen Wang
+LastEditors: Mengsen Wang
+LastEditTime: 2021-04-09 11:58:01
+FilePath: \OpenSeesFiles\Lib\PythonLib\model_view.py
+'''
 ''' OpenSees Visual Interface
 This package will watch your OpenSees file(s) and generate a live preview
 '''
-import os
-import time
-import matplotlib.pyplot as pl
-import matplotlib.animation as animation
-from mpl_toolkits.mplot3d import Axes3D
 
 
 # Declare OpenSees tcl files to watch and refresh rate
@@ -13,6 +15,11 @@ from mpl_toolkits.mplot3d import Axes3D
 #     followed by a comma.
 # Eg - One file -  tclfiles = ('example.tcl',)
 # Eg - Two files - tclfiles = ('example1.tcl', 'example2.tcl')
+import os
+import time
+import matplotlib.pyplot as pl
+import matplotlib.animation as animation
+from mpl_toolkits.mplot3d import Axes3D
 tclfiles = ('nodes.tcl',)
 
 # Specify the refresh rate of the viewer. 1 second is default and works well
