@@ -1,4 +1,7 @@
 *.out
+*.xlsx
+*.csv
+*.opju
 *.code-workspace
 *.txt
 *.json
