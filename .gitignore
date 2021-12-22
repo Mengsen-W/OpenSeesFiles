@@ -7,4 +7,5 @@
 .vscode
 .history
 build
+output
 __pycache__
